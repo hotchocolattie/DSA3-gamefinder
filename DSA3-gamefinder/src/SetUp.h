@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include "RedBlackTree.h"
 using namespace std;
 
 /*------------------------------------------ LOADING DATA ---------------------------------------------------*/
@@ -32,7 +33,8 @@ void addGenres(string genre, string boolean, vector<string>& genres) {
 }
 void loadData() {
 
-	// TO-DO: Create Red Black Tree Object
+	RedBlackTree tree;
+
 	// TO-DO: Create Heap Object
 
 	// AMF 4/15/25 - Here are the attribute types of a game
@@ -96,27 +98,30 @@ void loadData() {
 		int votes = stringtoInt(s_votes);
 		float score = stringtoFloat(s_score);
 
-	/*	cout << number << endl;
-		cout << name << endl;
-		cout << url << endl; 
-		cout << year << endl;
-		cout << rating << endl;
-		cout << score << endl;
-		cout << votes << endl;
-		cout << plot << endl;
+		//cout << number << endl;
+		//cout << name << endl;
+		//cout << url << endl; 
+		//cout << year << endl;
+		//cout << rating << endl;
+		//cout << score << endl;
+		//cout << votes << endl;
+		//cout << plot << endl;
 
-		for (int i = 0; i < genres.size(); i++) {
-			cout << genres[i] << " ";
-		}
+		//for (int i = 0; i < genres.size(); i++) {
+		//	cout << genres[i] << " ";
+		//}
 
-		cout << endl;
-		cout << "------------------------" << endl;*/
+		//cout << endl;
+		//cout << "------------------------" << endl;
 
 
-		// TO-DO: Add a new node to red-black tree class
+		tree.insert(name);
+
 		// TO-DO: Add a new node to the Heap class
 
 	}
+
+	tree.inOrder();
 
 	file.close();
 }
