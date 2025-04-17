@@ -1,31 +1,41 @@
-#pragma once
-#include <string>
+//
+// Created by lrncg on 4/17/2025.
+//
+#ifndef REDBLACKTREE_H
+#define REDBLACKTREE_H
 #include <iostream>
+#include <string>
 using namespace std;
 
+	struct Node {
+		// TO-DO: for Laurence, the other attributes
+		Node* left;
+		Node* right;
+		Node* parent;
+		string _name;
+		int rating;
+		int height;
+		bool red; // each time we insert a node in a red black tree, it's red
+		Node(string x, int r, bool color = true, int h = 0) : _name(x), rating(r),height(h), red(color),left(nullptr), right(nullptr) {}
 
+	};
 // AMF 4/16/25 - RedBlackTree Class is based on https://www.onlinegdb.com/BygDgQCjI
 
 class RedBlackTree {
-private:
-
-	struct Node {
-		// TO-DO: for Laurence, the other attributes 
-		Node* left;
-		Node* right;
-		string _name;
-		Node(string x) : _name(x), left(nullptr), right(nullptr) {}
-
-	};
-	Node* root = nullptr;
-	Node* helperInsert(Node* root, string name);
-	void inOrderHelper(Node* root);
-
 public:
-	void insert(string name);
+	Node* root = nullptr;
+	// void node_color_fix(Node* node);
+	Node* helperInsert(Node* curr, string name, int rating);
+	void inOrderHelper(Node* root);
+	void case_violation(Node* curr);
+	void insert(string name, int rating);
 	void inOrder();
 	void findTopTen();
 	void findTopTenGenre();
 	void findGame();
 };
+//
 
+
+
+#endif //REDBLACKTREE_H
