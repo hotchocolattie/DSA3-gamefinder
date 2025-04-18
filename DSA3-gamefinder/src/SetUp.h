@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <istream>
 #include "RedBlackTree.h"
 using namespace std;
 
@@ -31,9 +32,8 @@ void addGenres(string genre, string boolean, vector<string>& genres) {
 	}
 
 }
-void loadData() {
 
-	RedBlackTree tree;
+void loadData(RedBlackTree& tree /*add paramter for heap*/) {
 
 	// TO-DO: Create Heap Object
 

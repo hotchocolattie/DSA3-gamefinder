@@ -201,7 +201,7 @@ void RedBlackTree::findGame(string name) {
     if (searchNode != nullptr) {
 
         // printing out game information...
-        cout << "Name: " << searchNode->name << endl;
+        cout << "\n" << "Name: " << searchNode->name << endl;
         cout << "Rating: " << searchNode->rating << endl;
         cout << "Genres: ";
 
