@@ -41,7 +41,7 @@ void loadData() {
 	// Parsing requires the information to be caught in strings.
 
 	string s_number,
-		name, url, s_year, rating, s_score, s_votes, plot,
+		name, url, s_year, age_rating, s_rating, s_votes, plot,
 		action, adventure, comedy, crime, family, fantasy, mystery,
 		scifi, thriller;
 
@@ -68,8 +68,8 @@ void loadData() {
 		getline(source, name, '|');
 		getline(source, url, '|');
 		getline(source, s_year, '|');
-		getline(source, rating, '|');
-		getline(source, s_score, '|');
+		getline(source, age_rating, '|');
+		getline(source, s_rating, '|');
 		getline(source, s_votes, '|');
 		getline(source, plot, '|');
 		getline(source, action, '|');
@@ -96,32 +96,13 @@ void loadData() {
 		int number = stringtoInt(s_number);
 		int year = stringtoInt(s_year);
 		int votes = stringtoInt(s_votes);
-		float score = stringtoFloat(s_score);
-
-		//cout << number << endl;
-		//cout << name << endl;
-		//cout << url << endl; 
-		//cout << year << endl;
-		//cout << rating << endl;
-		//cout << score << endl;
-		//cout << votes << endl;
-		//cout << plot << endl;
-
-		//for (int i = 0; i < genres.size(); i++) {
-		//	cout << genres[i] << " ";
-		//}
-
-		//cout << endl;
-		//cout << "------------------------" << endl;
+		float rating = stringtoFloat(s_rating);
 
 
-		tree.insert(name);
+		tree.insert(name, rating, plot, genres);
 
 		// TO-DO: Add a new node to the Heap class
-
 	}
-
-	tree.inOrder();
 
 	file.close();
 }
