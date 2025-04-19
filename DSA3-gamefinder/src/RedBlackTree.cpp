@@ -223,7 +223,7 @@ void RedBlackTree::findGame(string name) {
 // the reverse order (right->root->left) to get the game with the max rating (Since a RBT is also a BST)
 
 void RedBlackTree::findTopTen() {
-    int counter = 0;
+    counter = 0;
 
     cout << "--------------- TOP TEN GAMES BASED ON RATING ---------------" << "\n" << endl;
     helperfindTopTen(this->root);
@@ -250,7 +250,7 @@ void RedBlackTree::helperfindTopTen(Node* root) {
 // IF selected genre is in the game's vector of genres, print it out
 
 void RedBlackTree::findTopTenGenre(string genre) {
-
+    counter = 0;
     string genre_copy = genre;
 
     // Capitalize the genre input for printing purposes
