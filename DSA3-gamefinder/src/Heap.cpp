@@ -150,7 +150,7 @@ void Heap::findGame(std::string title) {
 
     for (const auto& game : gamesHeap) {
         if (title == game.name) {
-            std::cout << "Game found:\n" << std::endl;
+            std::cout << "Game found (using Heap data structure):\n" << std::endl;
             printGame(game);
             gameFound = true;
             break;

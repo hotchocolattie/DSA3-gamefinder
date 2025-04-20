@@ -45,6 +45,12 @@ int main(){
         continue;
     } else {
         choice = stoi(choiceStr);
+
+        if (choice == 4) {
+            cout << "Thank you for using GAMEFINDERS!" << endl;
+            exit(0);
+            game_is_open = false;
+        }
     }
 
         cout<<"What data structure do you want to use for your search?"<<endl;
@@ -179,12 +185,6 @@ int main(){
             heap.findGame(game);
         }
 
-
-      }
-      else if (choice == 4){
-          cout << "Thank you for using GAMEFINDERS!" << endl;
-        exit(0);
-        game_is_open = false;
       } else {
           cout << "Please pick a valid choice!\n\n" << endl;
       }
