@@ -35,9 +35,20 @@ void addGenres(string genre, string boolean, vector<string>& genres) {
 
 }
 
-void loadData(RedBlackTree& tree /*add paramter for heap*/, Heap& heap) {
+void pickGenre() {
+	cout << "Please enter a number for genre: " << endl;
+	cout << "1. Action" << endl;
+	cout << "2. Adventure " << endl;
+	cout << "3. Comedy" << endl;
+	cout << "4. Crime" << endl;
+	cout << "5. Family" << endl;
+	cout << "6. Fantasy" << endl;
+	cout << "7. Mystery" << endl;
+	cout << "8. Sci-Fi" << endl;
+	cout << "9. Thriller" << endl;
 
-	// TO-DO: Create Heap Object
+}
+void loadData(RedBlackTree& tree /*add paramter for heap*/, Heap& heap) {
 
 	// AMF 4/15/25 - Here are the attribute types of a game
 	// Parsing requires the information to be caught in strings.
@@ -111,10 +122,8 @@ void loadData(RedBlackTree& tree /*add paramter for heap*/, Heap& heap) {
 		int votes = stringtoInt(s_votes);
 		float rating = stringtoFloat(s_rating);
 
+		tree.insert(name, genres, plot, year, age_rating, votes, rating);
 
-		tree.insert(name, rating, plot, genres);
-
-		// TO-DO: Add a new node to the Heap class
 
 		// initalize each node!
 		NodeHeap game;

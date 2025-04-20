@@ -16,37 +16,50 @@ using namespace std;
 		Node* parent;
 		string name;
 		string plot;
+		string age_rating;
 		float rating;
 		int height;
+		int year;
+		int votes;
 		bool red; // each time we insert a node in a red black tree, it's red
 		vector<string> genre;
-		Node(string x, float r, vector<string> g, string p, bool color = true, int h = 0) : name(x), rating(r), genre(g), plot(p), height(h), red(color),left(nullptr), right(nullptr) {}
+		Node(string x, float r, vector<string> g, string p, int y, string a, int v, bool color = true, int h = 0) : 
+			name(x), rating(r), genre(g), plot(p), year(y), age_rating(a), votes(v), height(h), red(color),left(nullptr), right(nullptr) {}
 
 	};
-// AMF 4/16/25 - RedBlackTree Class is based on https://www.onlinegdb.com/BygDgQCjI
 
 class RedBlackTree {
 
 private:
 	int counter = 0;
-
-public:
 	Node* root = nullptr;
-	// void node_color_fix(Node* node);
-	Node* helperInsert(Node* curr, string name, vector<string> genre, string plot, float rating);
+
+	/*================================================ FUNCTIONS TO OPERATE ON RED BLACK TREE ==============================================================================*/
+
+	Node* helperInsert(Node* curr, string name, vector<string> genres, string plot, int year, string age_rating, int votes, float rating);
 	Node* rotate_left(Node* parent);
-	Node* search(Node* curr,string name);
 	Node* rotate_right(Node* parent);
-	void inOrder();
 	void helperInorder(Node* root, bool& first);
 	void case_violation(Node* curr);
-	void rotate_helper(Node* old_curr,Node* new_curr);
-	void insert(string name, float rating, string plot, vector<string>);
-	void findTopTen();
-	void helperfindTopTen(Node* root);
 	void helperfindTopTenGenre(Node* root, string genre);
+	void helperfindTopTen(Node* root);
+	void printGame(Node* game);
+	void rotate_helper(Node* old_curr,Node* new_curr);
+	void inOrder();
+
+public:
+
+	/*================================================ FUNCTIONS TO CREATE RED BLACK TREE ==============================================================================*/
+
+	void insert(string name, vector<string> genres, string plot, int year, string age_rating, int votes, float rating);
+	Node* search(Node* curr,string name);
+
+	/*================================================ FUNCTIONS TO OPERATE ON RED BLACK TREE ==============================================================================*/
+
+	void findTopTen();
 	void findTopTenGenre(string genre);
 	void findGame(string name);
+
 };
 
 

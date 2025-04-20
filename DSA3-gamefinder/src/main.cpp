@@ -49,6 +49,7 @@ int main(){
 
         cout<<"What data structure do you want to use for your search?"<<endl;
         cout<<"1. Red Black Tree"<<"   "<<"2. Heap"<<endl;
+
         string structStr;
         int structure;
         cin>>structStr;
@@ -75,19 +76,7 @@ int main(){
       }
       else if (choice == 2){
 
-          // AMF: will most likely refactor
-
-          cout << "Please enter a number for genre: " << endl;
-          cout << "1. Action" << endl;
-          cout << "2. Adventure " << endl;
-          cout << "3. Comedy" << endl;
-          cout << "4. Crime" << endl;
-          cout << "5. Family" << endl;
-          cout << "6. Fantasy" << endl;
-          cout << "7. Mystery" << endl;
-          cout << "8. Sci-Fi" << endl;
-          cout << "9. Thriller" << endl;
-
+          pickGenre();
           string genreStr;
           int genre;
           cin >> genreStr;
@@ -159,7 +148,7 @@ int main(){
                 heap.printGenreTop10("Mystery");
             }
             else if (genre == 8) {
-                heap.printGenreTop10("Scifi");
+                heap.printGenreTop10("Sci-Fi");
             }
             else if (genre == 9) {
                 heap.printGenreTop10("Thriller");
