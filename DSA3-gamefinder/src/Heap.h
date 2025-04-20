@@ -77,6 +77,6 @@ private:
     void heapify(int key); // heapify
     //void insertGame OOPS this will be handled in setup as set up by Anna, we will just call the constructor with the games vector
     bool compareGames(const NodeHeap& game1, const NodeHeap& game2); // compare two games
-
+    NodeHeap pop(); // need to pop to get max, then heapify.
     void printGame(const NodeHeap& game); // strucutre used to print a game
 };

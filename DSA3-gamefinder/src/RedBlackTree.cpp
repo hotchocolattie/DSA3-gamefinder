@@ -79,8 +79,10 @@ void RedBlackTree::case_violation(Node* curr) {
     if (!curr || !curr->parent || !curr->parent->parent) {
         return;
     }
+
     Node* parent = curr->parent;
     Node* grandparent = parent->parent;
+
     if (curr->red == true && parent->red == true) {
         Node* uncle = (grandparent->left) ? grandparent->left : grandparent->right;
         if (uncle && uncle->red == true) { // when the uncle is red

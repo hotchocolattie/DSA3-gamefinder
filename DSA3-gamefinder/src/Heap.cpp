@@ -17,9 +17,9 @@ Heap::Heap(std::vector<NodeHeap> games) {
 
 // compare games, used by heapify
 bool Heap::compareGames(const NodeHeap& game1, const NodeHeap& game2) {
-    if (game1.rating > game2.rating) {
+    if ((game1.rating*10) > (game2.rating*10)) {
         return true;
-    } else if (game1.rating < game2.rating) {
+    } else if ((10*game1.rating) < (10*game2.rating)) {
         return false;
     }
 
@@ -85,10 +85,23 @@ void Heap::printTop10() {
 
     std::cout << "Top 10 Games by IMBD Rating (found using Heap data structure): \n\n" << std::endl;
 
+    std::vector<NodeHeap> poppedGames;
+
     for (int i = 0; i < 10; i++) {
         std::cout << (i+1) << ". ";
-        printGame(gamesHeap[i]);
+
+        NodeHeap bestRating = pop();
+        poppedGames.push_back(bestRating);
+
+        printGame(bestRating);
     }
+
+    // restore heap!! need to put back popped elems
+    for (auto& game : poppedGames) {
+        gamesHeap.push_back(game);
+    }
+
+    buildHeap();
 }
 
 // Planning:
@@ -97,20 +110,35 @@ void Heap::printTop10() {
 // once you've all finished with the red-black tree filtering, lmk if you've implemented or thought of a better solution!
 void Heap::printGenreTop10(std::string genreFind) {
     int weNeed10 = 0;
+    std::vector<NodeHeap> poppedGames;
+    NodeHeap bestRating;
 
     std::cout << "Top 10 Games in " << genreFind << " genre by IMBD Rating (found using Heap data structure): \n\n" << std::endl;
 
     for (const auto& game : gamesHeap) {
-        if (game.genres.count(genreFind) && game.genres.at(genreFind)) {
+
+        bestRating = pop();
+
+        if (bestRating.genres.count(genreFind) && bestRating.genres.at(genreFind)) {
             std::cout << (weNeed10+1) << ". ";
-            printGame(game);
+            printGame(bestRating);
             weNeed10++;
 
             if (weNeed10 == 10) {
+                poppedGames.push_back(bestRating);
                 break; // abort!!!
             }
         }
+
+        poppedGames.push_back(bestRating);
     }
+
+    // restore heap!! need to put back popped elems
+    for (auto& game : poppedGames) {
+        gamesHeap.push_back(game);
+    }
+
+    buildHeap();
 }
 
 
@@ -132,4 +160,21 @@ void Heap::findGame(std::string title) {
     if (!gameFound) {
         std::cout << title << " not found! Please try again!\n\n" << std::endl;
     }
+}
+
+// procedure for popping: remove 1st elem in heap, replace with last elem, then heapify that element until the heap is resorted!!
+NodeHeap Heap::pop() {
+    if (gamesHeap.empty()) {
+        std::cout << "Oops! The heap is empty. Please try again!" << std::endl;
+        return NodeHeap();
+    }
+
+    NodeHeap bestRating = gamesHeap[0];
+
+    gamesHeap[0] = gamesHeap.back();
+    gamesHeap.pop_back();
+
+    heapify(0);
+
+    return bestRating;
 }
