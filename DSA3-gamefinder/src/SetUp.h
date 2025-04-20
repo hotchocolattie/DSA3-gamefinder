@@ -35,6 +35,19 @@ void addGenres(string genre, string boolean, vector<string>& genres) {
 
 }
 
+void pickGenre() {
+	cout << "Please enter a number for genre: " << endl;
+	cout << "1. Action" << endl;
+	cout << "2. Adventure " << endl;
+	cout << "3. Comedy" << endl;
+	cout << "4. Crime" << endl;
+	cout << "5. Family" << endl;
+	cout << "6. Fantasy" << endl;
+	cout << "7. Mystery" << endl;
+	cout << "8. Sci-Fi" << endl;
+	cout << "9. Thriller" << endl;
+
+}
 void loadData(RedBlackTree& tree /*add paramter for heap*/, Heap& heap) {
 
 	// AMF 4/15/25 - Here are the attribute types of a game

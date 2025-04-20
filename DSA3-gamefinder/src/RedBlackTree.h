@@ -27,31 +27,39 @@ using namespace std;
 			name(x), rating(r), genre(g), plot(p), year(y), age_rating(a), votes(v), height(h), red(color),left(nullptr), right(nullptr) {}
 
 	};
-// AMF 4/16/25 - RedBlackTree Class is based on https://www.onlinegdb.com/BygDgQCjI
 
 class RedBlackTree {
 
 private:
 	int counter = 0;
-
-public:
 	Node* root = nullptr;
-	// void node_color_fix(Node* node);
+
+	/*================================================ FUNCTIONS TO OPERATE ON RED BLACK TREE ==============================================================================*/
+
 	Node* helperInsert(Node* curr, string name, vector<string> genres, string plot, int year, string age_rating, int votes, float rating);
 	Node* rotate_left(Node* parent);
-	Node* search(Node* curr,string name);
 	Node* rotate_right(Node* parent);
-	void inOrder();
 	void helperInorder(Node* root, bool& first);
 	void case_violation(Node* curr);
-	void rotate_helper(Node* old_curr,Node* new_curr);
-	void insert(string name, vector<string> genres, string plot, int year, string age_rating, int votes, float rating);
-	void findTopTen();
-	void helperfindTopTen(Node* root);
 	void helperfindTopTenGenre(Node* root, string genre);
+	void helperfindTopTen(Node* root);
+	void printGame(Node* game);
+	void rotate_helper(Node* old_curr,Node* new_curr);
+	void inOrder();
+
+public:
+
+	/*================================================ FUNCTIONS TO CREATE RED BLACK TREE ==============================================================================*/
+
+	void insert(string name, vector<string> genres, string plot, int year, string age_rating, int votes, float rating);
+	Node* search(Node* curr,string name);
+
+	/*================================================ FUNCTIONS TO OPERATE ON RED BLACK TREE ==============================================================================*/
+
+	void findTopTen();
 	void findTopTenGenre(string genre);
 	void findGame(string name);
-	void printGame(Node* game);
+
 };
 
 
