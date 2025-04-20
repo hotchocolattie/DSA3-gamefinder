@@ -5,14 +5,14 @@ using namespace std;
 
 
 void print_menu(){
-  cout<<"WELCOME TO GAMEFINDERS!!"<<endl;
+  cout<<"\nWELCOME TO GAMEFINDERS!!"<<endl;
   cout<<endl;
   cout<<"--------------MENU---------------"<<endl;
-  cout<<"1.Get the top 10 most popular games"<<endl;
-  cout<<"2.Get the top 10 most popular games in a genre"<<endl;
-  cout<<"3.Search a game by the name"<<endl;
-  cout<<"4.I'm done!!"<<endl << "\n";
-  cout<<"Make your choice:"<<endl;
+  cout<<"1. Get the top 10 best rated games"<<endl;
+  cout<<"2. Get the top 10 best ranted games in a genre"<<endl;
+  cout<<"3. Search a game by name"<<endl;
+  cout<<"4. I'm done!!"<<endl << "\n";
+  cout<<"Make your choice: " <<endl;
 }
 
 int main(){
@@ -29,11 +29,13 @@ int main(){
       cin>>choice;
 
       if (choice == 1){
-        cout << '\n';
         cout<<"What data structure do you want to use for your search?"<<endl;
         cout<<"1. Red Black Tree"<<"   "<<"2. Heap"<<endl;
         int structure;
         cin>>structure;
+
+          cout << "\n" << endl;
+
         if (structure == 1){
             tree.findTopTen();
         }
@@ -41,9 +43,9 @@ int main(){
           // call the function that returns the top 10 games with a heap.
             heap.printTop10();
         }
+
       }
       else if (choice == 2){
-        cout << '\n';
         cout<<"What data structure do you want to use for your search?"<<endl;
         cout<<"1. Red Black Tree"<<"   "<<"2. Heap"<<endl;
         int structure;
@@ -51,7 +53,7 @@ int main(){
 
           // AMF: will most likely refactor
 
-          cout << "\n" << "Please enter a number for genre: " << endl;
+          cout << "Please enter a number for genre: " << endl;
           cout << "1. Action" << endl;
           cout << "2. Adventure " << endl;
           cout << "3. Comedy" << endl;
@@ -65,6 +67,7 @@ int main(){
           int genre;
           cin >> genre;
 
+          cout << "\n" << endl;
         if (structure == 1){
 
             if (genre == 1) {
@@ -95,7 +98,7 @@ int main(){
                 tree.findTopTenGenre("thriller");
             }
             else {
-                cout << "Please pick a valid number!" << endl;
+                cout << "Please pick a valid number!\n\n" << endl;
             }
 
         }
@@ -130,34 +133,44 @@ int main(){
                 heap.printGenreTop10("Thriller");
             }
             else {
-                cout << "Please pick a valid number!" << endl;
+                cout << "Please pick a valid number!\n\n" << endl;
             }
         }
+
+
       }
       else if (choice == 3){
 
-        cout << '\n';
         cout<<"What data structure do you want to use for your search?"<<endl;
         cout<<"1. Red Black Tree"<<"   "<<"2. Heap"<<endl;
         int structure;
         cin>>structure;
+
+          string game;
+          cout << "Please enter game title: " << endl;
+          cin.ignore();
+          getline(cin, game);
+
+          cout << "\n" << endl;
+
         if (structure == 1){
-            string game;
-            cout << "Please enter game title" << endl;
-            cin.ignore();
-            getline(cin, game);
             tree.findGame(game);
 
         }
         else if (structure == 2){
           // call the function that returns the top 10 games with a heap.
             // WILL DO SOON!!
-            cout << "Coming soon!" << endl;
+            heap.findGame(game);
         }
+
+
       }
       else if (choice == 4){
+          cout << "Thank you for using GAMEFINDERS!" << endl;
         exit(0);
         game_is_open = false;
+      } else {
+          cout << "Please pick a valid choice!\n\n" << endl;
       }
     }
 }

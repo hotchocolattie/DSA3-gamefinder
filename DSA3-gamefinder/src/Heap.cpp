@@ -113,3 +113,23 @@ void Heap::printGenreTop10(std::string genreFind) {
     }
 }
 
+
+// Planning:
+// I think we'll just have to iterate through the entire heap until we find a name match. Doesn't seem to be a better option.
+void Heap::findGame(std::string title) {
+
+    bool gameFound = false;
+
+    for (const auto& game : gamesHeap) {
+        if (title == game.name) {
+            std::cout << "Game found:\n" << std::endl;
+            printGame(game);
+            gameFound = true;
+            break;
+        }
+    }
+
+    if (!gameFound) {
+        std::cout << title << " not found! Please try again!\n\n" << std::endl;
+    }
+}
