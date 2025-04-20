@@ -15,6 +15,15 @@ void print_menu(){
   cout<<"Make your choice: " <<endl;
 }
 
+bool isNum(string str) {
+    try {
+        stoi(str);
+        return true;
+    } catch (...) {
+        return false;
+    }
+}
+
 int main(){
 
 
@@ -23,18 +32,37 @@ int main(){
 
     bool game_is_open = true;
     loadData(tree, heap);
+
+
+    string choiceStr;
     int choice;
     while (game_is_open){
       print_menu();
-      cin>>choice;
+      cin>>choiceStr;
 
-      if (choice == 1){
+    if (!isNum(choiceStr)) {
+        cout << "Invalid Input!" << endl;
+        continue;
+    } else {
+        choice = stoi(choiceStr);
+    }
+
         cout<<"What data structure do you want to use for your search?"<<endl;
         cout<<"1. Red Black Tree"<<"   "<<"2. Heap"<<endl;
+        string structStr;
         int structure;
-        cin>>structure;
+        cin>>structStr;
 
-          cout << "\n" << endl;
+        if (!isNum(structStr)) {
+            cout << "Invalid Input!" << endl;
+            continue;
+        } else {
+            structure = stoi(structStr);
+        }
+
+        cout << "\n" << endl;
+
+      if (choice == 1){
 
         if (structure == 1){
             tree.findTopTen();
@@ -46,10 +74,6 @@ int main(){
 
       }
       else if (choice == 2){
-        cout<<"What data structure do you want to use for your search?"<<endl;
-        cout<<"1. Red Black Tree"<<"   "<<"2. Heap"<<endl;
-        int structure;
-        cin>>structure;
 
           // AMF: will most likely refactor
 
@@ -64,8 +88,16 @@ int main(){
           cout << "8. Sci-Fi" << endl;
           cout << "9. Thriller" << endl;
 
+          string genreStr;
           int genre;
-          cin >> genre;
+          cin >> genreStr;
+
+          if (!isNum(genreStr)) {
+              cout << "Invalid Input!" << endl;
+              continue;
+          } else {
+              genre = stoi(genreStr);
+          }
 
           cout << "\n" << endl;
         if (structure == 1){
@@ -141,11 +173,6 @@ int main(){
       }
       else if (choice == 3){
 
-        cout<<"What data structure do you want to use for your search?"<<endl;
-        cout<<"1. Red Black Tree"<<"   "<<"2. Heap"<<endl;
-        int structure;
-        cin>>structure;
-
           string game;
           cout << "Please enter game title: " << endl;
           cin.ignore();
@@ -174,4 +201,3 @@ int main(){
       }
     }
 }
-
