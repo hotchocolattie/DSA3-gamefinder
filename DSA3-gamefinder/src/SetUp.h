@@ -54,10 +54,10 @@ void loadData(RedBlackTree& tree /*add paramter for heap*/, Heap& heap) {
 	ifstream file("../DSA3-gamefinder/game_data/videogames.csv");
 
 	if (!file.is_open()) {
-		cout << "Cannot open the file. Try Again";
+		cout << "Cannot open the file. Try Again.";
 		return;
 	} else {
-		cout<< "yay! file opened!" << endl;
+		cout<< "File Opened." << endl;
 	}
 
 	string line;
@@ -68,11 +68,11 @@ void loadData(RedBlackTree& tree /*add paramter for heap*/, Heap& heap) {
 	vector<NodeHeap> games;
 
 	// debug
-	int count = 0;
+	// old line used for debugging: int count = 0;
 
 	while (getline(file, line)) {
-		count++;
-		cout << "line " << count << ": " << line << endl;
+		// old line used for debugging: count++;
+		// old line used for debugging: cout << "line " << count << ": " << line << endl;
 
 		vector<string> genres;
 		stringstream source(line);
@@ -141,6 +141,7 @@ void loadData(RedBlackTree& tree /*add paramter for heap*/, Heap& heap) {
 	file.close();
 	// now that we've built the vector, create heap!!!
 	heap = Heap(games);
-	cout << "games in vec: " << games.size() << endl;
+
+	// old line used for debugging: cout << "games in vec: " << games.size() << endl;
 
 }

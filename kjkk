@@ -1,0 +1,119 @@
+[33mcommit fb71f67fe9a66d461c99edbd49bee8e16eddb6f0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Lattie <gracemszhao@gmail.com>
+Date:   Sun Apr 20 03:52:44 2025 -0400
+
+    Adding Heap structure, fixed an error with loading in the CSV, added Heap's print top 10
+
+ 49 files changed, 5938 insertions(+), 16 deletions(-)
+
+[33mcommit 97b77e58c597fccb8f097f4a0bdedd0e96010812[m
+Author: Anna Folsom <amfolsom8@gmail.com>
+Date:   Fri Apr 18 20:35:36 2025 -0400
+
+    fixed toptenGenre not printing properly error
+
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+[33mcommit 2e5b02b8228ca0d58816dcabce3e2170e9bfdf28[m
+Author: Anna Folsom <amfolsom8@gmail.com>
+Date:   Fri Apr 18 19:31:06 2025 -0400
+
+    tied the functionality between main, setup, and RBT
+
+ 3 files changed, 67 insertions(+), 8 deletions(-)
+
+[33mcommit 0d764ebeb2bf8096eb52bdbd162fe1babe7a5719[m
+Author: Anna Folsom <amfolsom8@gmail.com>
+Date:   Fri Apr 18 18:39:13 2025 -0400
+
+    finished getting top ten games, top ten games for genre, and searching for a game. I also debugged a little bit for the insert function and added more variables in the Node struct.
+
+ 3 files changed, 171 insertions(+), 69 deletions(-)
+
+[33mcommit 93bb76b78b50c3bfcf8f8dd41a54cbc371062812[m
+Author: Laurence Georges <lrncgeorges@gmail.com>
+Date:   Fri Apr 18 03:16:32 2025 -0400
+
+    I'm done with common functions for the redblacktree class, lmk if there's something else we may need.
+
+ 2 files changed, 126 insertions(+), 16 deletions(-)
+
+[33mcommit b80da3b5e6c09451f6ffaf30cb288938c1d07c16[m
+Author: Laurence Georges <lrncgeorges@gmail.com>
+Date:   Thu Apr 17 13:17:13 2025 -0400
+
+    I redid the struct node and I separated it from the class RedBlackTree, I also started with insert.
+
+ 2 files changed, 80 insertions(+), 36 deletions(-)
+
+[33mcommit e9ac14aa1c6953d6c9fb5179456c07f12e7a405d[m
+Author: Anna Folsom <amfolsom8@gmail.com>
+Date:   Thu Apr 17 00:44:42 2025 -0400
+
+    I did the menu and the while loop structure for us to call each function.
+
+ 1 file changed, 60 insertions(+)
+
+[33mcommit 295293c7e4072109408d1b049fb0b29d406f32f4[m
+Author: Anna Folsom <amfolsom8@gmail.com>
+Date:   Wed Apr 16 22:37:57 2025 -0400
+
+    got rid of duplicate entries
+
+ 1 file changed, 19705 insertions(+), 20801 deletions(-)
+
+[33mcommit 281497f27ad6d71f589d7140e10d9c7093c94d46[m
+Author: Anna Folsom <amfolsom8@gmail.com>
+Date:   Wed Apr 16 21:54:05 2025 -0400
+
+    started on the RedBlack tree, started insertion and created an inOrder function for debugging
+
+ 3 files changed, 86 insertions(+), 17 deletions(-)
+
+[33mcommit d01e0f9ab4707ec803d1b1e5e9a4f98b5c61443b[m
+Author: Anna Folsom <amfolsom8@gmail.com>
+Date:   Wed Apr 16 00:41:45 2025 -0400
+
+    filled in blank cells, with 0s
+
+ 1 file changed, 15612 insertions(+), 15613 deletions(-)
+
+[33mcommit bd66a2e4f88bfc543fee6cec0fb2ec44d4f3b63a[m
+Author: Anna Folsom <amfolsom8@gmail.com>
+Date:   Wed Apr 16 00:36:29 2025 -0400
+
+    finished parsing function, where data from cells are put into varaibles that can be used for class structs
+
+ 1 file changed, 71 insertions(+), 8 deletions(-)
+
+[33mcommit df68be2095413c214ddbdb3cb76cfb3b5c2c49be[m
+Author: Anna Folsom <amfolsom8@gmail.com>
+Date:   Tue Apr 15 21:29:55 2025 -0400
+
+    changed the delimiter to |
+
+ 1 file changed, 20805 insertions(+), 20805 deletions(-)
+
+[33mcommit ff19f8591b670652ce51afe5f36123a1240748bf[m
+Author: Anna Folsom <amfolsom8@gmail.com>
+Date:   Tue Apr 15 21:26:31 2025 -0400
+
+    started to parse data
+
+ 2 files changed, 62 insertions(+), 3 deletions(-)
+
+[33mcommit 8e604cc48efea85e42bd65779fa3c9468f02a86d[m
+Author: Anna Folsom <amfolsom8@gmail.com>
+Date:   Tue Apr 15 18:04:30 2025 -0400
+
+    Added the main files for the project, included the .csv file
+
+ 7 files changed, 20826 insertions(+)
+
+[33mcommit b92adcba087788b54d8fafd571befe7d68744465[m
+Author: hotchocolattie <105618466+hotchocolattie@users.noreply.github.com>
+Date:   Sat Apr 5 20:53:28 2025 -0400
+
+    Initial commit
+
+ 1 file changed, 2 insertions(+)

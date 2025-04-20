@@ -8,7 +8,7 @@
 // constructor, initialize heap
 // use the set up created by Anna
 Heap::Heap(std::vector<NodeHeap> games) {
-    std::cout << "heap will be loading in: " << games.size() << " games" << std::endl;
+    // Old line used for debugging: std::cout << "heap will be loading in: " << games.size() << " games" << std::endl;
 
 
     gamesHeap = games;
@@ -59,7 +59,7 @@ void Heap::buildHeap() {
 }
 
 void Heap::printGame(const NodeHeap& game) {
-    std::cout << game.name << " (" + game.year + ") | Certification: " + game.cert + " | IMBD rating: " << game.rating << " | IMBD votes: " << game.votes << "\n============================================================================================\n" << game.plot << "\n" << std::endl;
+    std::cout << game.name << " (" + game.year + ") | Certification: " + game.cert + " | IMBD rating: " << game.rating << " | IMBD votes: " << game.votes << "\n======================================================================================================\n" << game.plot << "\n" << std::endl;
     std::cout << "Genres: ";
 
     bool firstGame = true;
@@ -75,15 +75,41 @@ void Heap::printGame(const NodeHeap& game) {
         }
     }
 
-    std::cout << "\n\n\n\n\n";
+    std::cout << "\n\n\n";
 }
 
 
 // print top 10
 void Heap::printTop10() {
-    std::cout << "heap size: " << gamesHeap.size() << std::endl;
+    // Old line used for debugging: std::cout << "heap size: " << gamesHeap.size() << std::endl;
+
+    std::cout << "Top 10 Games by IMBD Rating (found using Heap data structure): \n\n" << std::endl;
 
     for (int i = 0; i < 10; i++) {
+        std::cout << (i+1) << ". ";
         printGame(gamesHeap[i]);
     }
 }
+
+// Planning:
+// To print by genre... since we've sorted by RATING as our key,
+// ermmm hmmm we might just have to brute force this by going thru each game and checking their genre maps individually, and print them if they match the wanted genre.
+// once you've all finished with the red-black tree filtering, lmk if you've implemented or thought of a better solution!
+void Heap::printGenreTop10(std::string genreFind) {
+    int weNeed10 = 0;
+
+    std::cout << "Top 10 Games in " << genreFind << " genre by IMBD Rating (found using Heap data structure): \n\n" << std::endl;
+
+    for (const auto& game : gamesHeap) {
+        if (game.genres.count(genreFind) && game.genres.at(genreFind)) {
+            std::cout << (weNeed10+1) << ". ";
+            printGame(game);
+            weNeed10++;
+
+            if (weNeed10 == 10) {
+                break; // abort!!!
+            }
+        }
+    }
+}
+

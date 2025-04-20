@@ -48,23 +48,24 @@ int main(){
         cout<<"1. Red Black Tree"<<"   "<<"2. Heap"<<endl;
         int structure;
         cin>>structure;
+
+          // AMF: will most likely refactor
+
+          cout << "\n" << "Please enter a number for genre: " << endl;
+          cout << "1. Action" << endl;
+          cout << "2. Adventure " << endl;
+          cout << "3. Comedy" << endl;
+          cout << "4. Crime" << endl;
+          cout << "5. Family" << endl;
+          cout << "6. Fantasy" << endl;
+          cout << "7. Mystery" << endl;
+          cout << "8. Sci-Fi" << endl;
+          cout << "9. Thriller" << endl;
+
+          int genre;
+          cin >> genre;
+
         if (structure == 1){
-
-            // AMF: will most likely refactor
-             
-            cout << "\n" << "Please enter a number for genre: " << endl;
-            cout << "1. Action" << endl;
-            cout << "2. Adventure " << endl;
-            cout << "3. Comedy" << endl;
-            cout << "4. Crime" << endl;
-            cout << "5. Family" << endl;
-            cout << "6. Fantasy" << endl;
-            cout << "7. Mystery" << endl;
-            cout << "8. Sci-Fi" << endl;
-            cout << "9. Thriller" << endl;
-
-            int genre;
-            cin >> genre;
 
             if (genre == 1) {
                 tree.findTopTenGenre("action");
@@ -100,8 +101,37 @@ int main(){
         }
         else if (structure == 2){
           // call the function that returns the top 10 games with a heap in a genre.
-            // WILL DO SOON!
-            cout << "Coming soon!" << endl;
+
+            if (genre == 1) {
+                heap.printGenreTop10("Action");
+            }
+            else if (genre == 2) {
+                heap.printGenreTop10("Adventure");
+            }
+            else if (genre == 3) {
+                heap.printGenreTop10("Comedy");
+            }
+            else if (genre == 4) {
+                heap.printGenreTop10("Crime");
+            }
+            else if (genre == 5) {
+                heap.printGenreTop10("Family");
+            }
+            else if (genre == 6) {
+                heap.printGenreTop10("Fantasy");
+            }
+            else if (genre == 7) {
+                heap.printGenreTop10("Mystery");
+            }
+            else if (genre == 8) {
+                heap.printGenreTop10("Scifi");
+            }
+            else if (genre == 9) {
+                heap.printGenreTop10("Thriller");
+            }
+            else {
+                cout << "Please pick a valid number!" << endl;
+            }
         }
       }
       else if (choice == 3){

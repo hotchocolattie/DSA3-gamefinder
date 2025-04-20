@@ -40,6 +40,7 @@
  * - top 10 printer
  * - top 10 in [genre] printer (we will take in genre as a string!! will need to compare that against the map of genres (also stored as string) in each NodeHeap/game)
  * - print specific game by TITLE
+ * ^^ omg guys i think search by title will actually be like O(n) TC :sob:
  */
 
 // template for each game NodeHeap
@@ -67,7 +68,7 @@ public:
     //void insert (NodeHeap game);
     // insert has been phased out and everything's just done in the constructor and buildHeap now, since like. the heap will never change, it'll always be the same CSV. also the geeksforgeeks example used an array, and the insert function was mostly just about resizing the array, which we don't need to do, because we're using vectors!!!
     void printTop10(); // print top 10
-    void printGenreTop10(); // print top 10 by genre
+    void printGenreTop10(std::string genreFind); // print top 10 by genre
     void findGame(std::string title); // find game by title
 
 
