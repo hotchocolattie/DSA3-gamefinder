@@ -9,7 +9,7 @@ void print_menu(){
   cout<<endl;
   cout<<"--------------MENU---------------"<<endl;
   cout<<"1. Get the top 10 best rated games"<<endl;
-  cout<<"2. Get the top 10 best ranted games in a genre"<<endl;
+  cout<<"2. Get the top 10 best rated games in a genre"<<endl;
   cout<<"3. Search a game by name"<<endl;
   cout<<"4. I'm done!!"<<endl << "\n";
   cout<<"Make your choice: " <<endl;
