@@ -37,8 +37,6 @@ void addGenres(string genre, string boolean, vector<string>& genres) {
 
 void loadData(RedBlackTree& tree /*add paramter for heap*/, Heap& heap) {
 
-	// TO-DO: Create Heap Object
-
 	// AMF 4/15/25 - Here are the attribute types of a game
 	// Parsing requires the information to be caught in strings.
 
@@ -111,10 +109,8 @@ void loadData(RedBlackTree& tree /*add paramter for heap*/, Heap& heap) {
 		int votes = stringtoInt(s_votes);
 		float rating = stringtoFloat(s_rating);
 
+		tree.insert(name, genres, plot, year, age_rating, votes, rating);
 
-		tree.insert(name, rating, plot, genres);
-
-		// TO-DO: Add a new node to the Heap class
 
 		// initalize each node!
 		NodeHeap game;

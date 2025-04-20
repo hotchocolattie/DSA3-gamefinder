@@ -1,18 +1,9 @@
 #include "RedBlackTree.h"
 
 
-// AMF 4/16/25 - Implemented a basic insertion for BST, will change  into a RedBlack Tree
-
-
-// void RedBlackTree::node_color_fix(Node *node) {
-//     if (node == root) {
-//         node->red = false;
-//     }
-// }
-
-Node* RedBlackTree::helperInsert(Node* curr, string name, vector<string> genres, string plot, float rating) {
+Node* RedBlackTree::helperInsert(Node* curr, string name, vector<string> genres, string plot, int year, string age_rating, int votes, float rating) {
     if (curr == nullptr) {
-        Node* node = new Node(name,rating, genres, plot, true);
+        Node* node = new Node(name,rating, genres, plot, year, age_rating, votes, true);
         node->height = 1;
         if (root == nullptr) {
             root = node;
@@ -21,25 +12,25 @@ Node* RedBlackTree::helperInsert(Node* curr, string name, vector<string> genres,
         return node;
     }
     if (rating < curr->rating) {
-        curr->left = helperInsert(curr->left, name, genres, plot, rating);
+        curr->left = helperInsert(curr->left, name, genres, plot, year, age_rating, votes, rating);
         curr->left->parent = curr;
         curr->left->red = true;
     }
 
     if (rating > curr->rating) {
-        curr->right = helperInsert(curr->right, name, genres, plot, rating);
+        curr->right = helperInsert(curr->right, name, genres, plot, year, age_rating, votes, rating);
         curr->right->parent = curr;
         curr->right->red = true;
         // if the parent and the child are red, and the uncle is red, recolor the parent and uncle to black and check the grandparent
     }
     if (rating == curr->rating) {
         if (name > curr->name) {
-            curr->left = helperInsert(curr->left, name, genres, plot, rating);
+            curr->left = helperInsert(curr->left, name, genres, plot, year, age_rating, votes, rating);
             curr->left->parent = curr;
             curr->left->red = true;
         }
         else {
-            curr->right = helperInsert(curr->right, name, genres, plot, rating);
+            curr->right = helperInsert(curr->right, name, genres, plot, year, age_rating, votes, rating);
             curr->right->parent = curr;
             curr->right->red = true;
         }
@@ -133,23 +124,10 @@ void RedBlackTree::rotate_helper(Node* old_curr, Node* new_curr) { // reconnect 
     }
 }
 
- void RedBlackTree::insert(string name, float rating, string plot, vector<string> genres) {
-     root = helperInsert(root, name, genres, plot, rating);
+ void RedBlackTree::insert(string name, vector<string> genres, string plot, int year, string age_rating, int votes, float rating) {
+     root = helperInsert(root, name, genres, plot, year, age_rating, votes, rating);
  }
 
-//
-// // AMF 4/16/25 - Basic Inorder function for debugging
-////
- //void RedBlackTree::inOrderHelper(Node* root) {
- //    if (root == nullptr) {
- //        cout << "";
- //    }
- //    else {
- //        inOrderHelper(root->left);
- //        cout << root->_name << endl;
- //        inOrderHelper(root->right);
- //    }
- //}
 
 void RedBlackTree::helperInorder(Node* curr, bool& first) {
     first = true;
@@ -225,9 +203,8 @@ void RedBlackTree::findGame(string name) {
 void RedBlackTree::findTopTen() {
     counter = 0;
 
-    cout << "--------------- TOP TEN GAMES BASED ON RATING ---------------" << "\n" << endl;
+    cout << "Top 10 Games by IMBD Rating (found using Red Black Tree data structure): \n\n" << std::endl;
     helperfindTopTen(this->root);
-    cout << "\n" << endl;
 }
 
 void RedBlackTree::helperfindTopTen(Node* root) {
@@ -238,7 +215,7 @@ void RedBlackTree::helperfindTopTen(Node* root) {
    
     helperfindTopTen(root->right);
     if (counter < 10) {
-        cout << counter + 1 <<". " <<  root->name << " : " << root->rating << endl;
+        printGame(root);
     }
     counter++;
     helperfindTopTen(root->left);
@@ -257,11 +234,11 @@ void RedBlackTree::findTopTenGenre(string genre) {
 
     for (char& c : genre) {
         c = toupper(c);
+        break;
     }
 
-    cout << "--------------- TOP TEN GAMES FOR " << genre << " ---------------" << "\n" << endl;
+    cout << "Top 10 Games in " << genre << " by IMBD Rating (found using Red Black Tree Data Structure) \n\n" << std::endl;
     helperfindTopTenGenre(this->root, genre_copy);
-    cout << "\n" << endl;
 }
 
 void RedBlackTree::helperfindTopTenGenre(Node* root, string genre) {
@@ -282,9 +259,23 @@ void RedBlackTree::helperfindTopTenGenre(Node* root, string genre) {
     }
 
     if (counter < 10 && genreFound == true) {
-        cout << counter + 1 << ". " << root->name << " : " << root->rating << endl;
+        printGame(root);
         counter++;
     }
 
     helperfindTopTenGenre(root->left, genre);
+}
+
+void RedBlackTree::printGame(Node* root) {
+    cout << counter + 1 << ". " << root->name << "(" << root->year << ")" << " | Certification: " + root->age_rating + " | IMBD rating : " << root->rating << " | IMBD votes : " << root->votes << "\n======================================================================================================\n" << root->plot << "\n" << std::endl;
+    cout << "Genres: ";
+
+    for (int i = 0; i < root->genre.size(); i++) {
+        if (i == root->genre.size() - 1)
+            cout << root->genre[i] << endl;
+        else
+            cout << root->genre[i] << ", ";
+    }
+
+    cout << endl;
 }
