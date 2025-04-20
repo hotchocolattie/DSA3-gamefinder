@@ -1,0 +1,3 @@
+C:/Users/grace/Downloads/DSA Prog Quizzes/finalproj/DSA3-gamefinder/cmake-build-debug/CMakeFiles/DSA3_gamefinder.dir
+C:/Users/grace/Downloads/DSA Prog Quizzes/finalproj/DSA3-gamefinder/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/grace/Downloads/DSA Prog Quizzes/finalproj/DSA3-gamefinder/cmake-build-debug/CMakeFiles/rebuild_cache.dir

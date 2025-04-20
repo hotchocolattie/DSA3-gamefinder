@@ -1,0 +1,17 @@
+# ninja log v6
+14	348	7668373118251368	CMakeFiles/DSA3_gamefinder.dir/DSA3-gamefinder/src/Heap.cpp.obj	d232f5bf49ee9de9
+434	548	7668378197650151	DSA3_gamefinder.exe	4823ab90c74ddd1
+26	462	7668378391204530	build.ninja	284ac2addf64a610
+9	289	7667356349989523	CMakeFiles/DSA3_gamefinder.dir/DSA3-gamefinder/src/RedBlackTree.cpp.obj	dfbb29137cf87743
+3	433	7668378193344366	CMakeFiles/DSA3_gamefinder.dir/DSA3-gamefinder/src/main.cpp.obj	25ade31581f27478
+3	339	7668381299235415	CMakeFiles/DSA3_gamefinder.dir/DSA3-gamefinder/src/Heap.cpp.obj	d232f5bf49ee9de9
+8	466	7668381299285904	CMakeFiles/DSA3_gamefinder.dir/DSA3-gamefinder/src/main.cpp.obj	25ade31581f27478
+467	585	7668381303880733	DSA3_gamefinder.exe	4823ab90c74ddd1
+4	351	7668384156321106	CMakeFiles/DSA3_gamefinder.dir/DSA3-gamefinder/src/Heap.cpp.obj	d232f5bf49ee9de9
+8	498	7668384156362228	CMakeFiles/DSA3_gamefinder.dir/DSA3-gamefinder/src/main.cpp.obj	25ade31581f27478
+498	627	7668384161272026	DSA3_gamefinder.exe	4823ab90c74ddd1
+4	353	7668384470162154	CMakeFiles/DSA3_gamefinder.dir/DSA3-gamefinder/src/Heap.cpp.obj	d232f5bf49ee9de9
+353	488	7668384473660700	DSA3_gamefinder.exe	4823ab90c74ddd1
+3	365	7668386277388259	CMakeFiles/DSA3_gamefinder.dir/DSA3-gamefinder/src/Heap.cpp.obj	d232f5bf49ee9de9
+7	499	7668386277428254	CMakeFiles/DSA3_gamefinder.dir/DSA3-gamefinder/src/main.cpp.obj	25ade31581f27478
+500	636	7668386282347146	DSA3_gamefinder.exe	4823ab90c74ddd1

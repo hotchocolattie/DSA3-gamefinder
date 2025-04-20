@@ -1,4 +1,5 @@
 #include "SetUp.h"
+#include "Heap.h"
 #include <iostream>
 using namespace std;
 
@@ -14,12 +15,14 @@ void print_menu(){
   cout<<"Make your choice:"<<endl;
 }
 
-int main()
-{
+int main(){
+
+
     RedBlackTree tree;
+    Heap heap;
 
     bool game_is_open = true;
-    loadData(tree);
+    loadData(tree, heap);
     int choice;
     while (game_is_open){
       print_menu();
@@ -27,8 +30,8 @@ int main()
 
       if (choice == 1){
         cout << '\n';
-        cout<<"How do you want your search to go?"<<endl;
-        cout<<"1.Red Black Tree"<<"   "<<"2.Heap"<<endl;
+        cout<<"What data structure do you want to use for your search?"<<endl;
+        cout<<"1. Red Black Tree"<<"   "<<"2. Heap"<<endl;
         int structure;
         cin>>structure;
         if (structure == 1){
@@ -36,12 +39,13 @@ int main()
         }
         else if (structure == 2){
           // call the function that returns the top 10 games with a heap.
+            heap.printTop10();
         }
       }
       else if (choice == 2){
         cout << '\n';
-        cout<<"How do you want your search to go?"<<endl;
-        cout<<"1.Red Black Tree"<<"   "<<"2.Heap"<<endl;
+        cout<<"What data structure do you want to use for your search?"<<endl;
+        cout<<"1. Red Black Tree"<<"   "<<"2. Heap"<<endl;
         int structure;
         cin>>structure;
         if (structure == 1){
@@ -96,13 +100,15 @@ int main()
         }
         else if (structure == 2){
           // call the function that returns the top 10 games with a heap in a genre.
+            // WILL DO SOON!
+            cout << "Coming soon!" << endl;
         }
       }
       else if (choice == 3){
 
         cout << '\n';
-        cout<<"How do you want your search to go?"<<endl;
-        cout<<"1.Red Black Tree"<<"   "<<"2.Heap"<<endl;
+        cout<<"What data structure do you want to use for your search?"<<endl;
+        cout<<"1. Red Black Tree"<<"   "<<"2. Heap"<<endl;
         int structure;
         cin>>structure;
         if (structure == 1){
@@ -115,6 +121,8 @@ int main()
         }
         else if (structure == 2){
           // call the function that returns the top 10 games with a heap.
+            // WILL DO SOON!!
+            cout << "Coming soon!" << endl;
         }
       }
       else if (choice == 4){
@@ -122,6 +130,5 @@ int main()
         game_is_open = false;
       }
     }
-
 }
 

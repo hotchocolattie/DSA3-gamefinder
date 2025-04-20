@@ -4,6 +4,8 @@
 #include <string>
 #include <iostream>
 #include <istream>
+
+#include "Heap.h"
 #include "RedBlackTree.h"
 using namespace std;
 
@@ -33,7 +35,7 @@ void addGenres(string genre, string boolean, vector<string>& genres) {
 
 }
 
-void loadData(RedBlackTree& tree /*add paramter for heap*/) {
+void loadData(RedBlackTree& tree /*add paramter for heap*/, Heap& heap) {
 
 	// TO-DO: Create Heap Object
 
@@ -49,17 +51,28 @@ void loadData(RedBlackTree& tree /*add paramter for heap*/) {
 	// AMF 4/15/25 - This is the start to parse the data from the .csv file. 
 	// The delimeter format is "|"
 
-	ifstream file("game_data/videogames.csv");
+	ifstream file("../DSA3-gamefinder/game_data/videogames.csv");
 
 	if (!file.is_open()) {
 		cout << "Cannot open the file. Try Again";
+		return;
+	} else {
+		cout<< "yay! file opened!" << endl;
 	}
 
 	string line;
 
 	getline(file, line);
 
+	// New thing for heap: will be passing in a vector for heap
+	vector<NodeHeap> games;
+
+	// debug
+	int count = 0;
+
 	while (getline(file, line)) {
+		count++;
+		cout << "line " << count << ": " << line << endl;
 
 		vector<string> genres;
 		stringstream source(line);
@@ -102,8 +115,32 @@ void loadData(RedBlackTree& tree /*add paramter for heap*/) {
 		tree.insert(name, rating, plot, genres);
 
 		// TO-DO: Add a new node to the Heap class
+
+		// initalize each node!
+		NodeHeap game;
+		game.name = name;
+		game.url = url;
+		game.year = s_year;
+		game.cert = age_rating;
+		game.votes = s_votes;
+		game.plot = plot;
+		game.rating = rating;
+
+		// builds the genres map
+		vector<string> genresL = {"Action", "Adventure", "Comedy", "Crime", "Family", "Fantasy", "Mystery", "Sci-Fi", "Thriller"};
+		vector<string> genreVals = {action, adventure, comedy, crime, family, fantasy, mystery, scifi, thriller};
+
+		// for each game, for each genre, set the node (game's) genres map at i to that genre + the bool of if it's val in the spreadsheet is TRUE or not
+		for (int i = 0; i < genresL.size(); i++) {
+			game.genres[genresL[i]] = (genreVals[i] == "TRUE");
+		}
+
+		games.push_back(game);
 	}
 
 	file.close();
-}
+	// now that we've built the vector, create heap!!!
+	heap = Heap(games);
+	cout << "games in vec: " << games.size() << endl;
 
+}
