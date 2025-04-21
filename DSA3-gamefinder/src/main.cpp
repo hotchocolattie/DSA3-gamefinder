@@ -41,7 +41,7 @@ int main(){
       cin>>choiceStr;
 
     if (!isNum(choiceStr)) {
-        cout << "Invalid Input!" << endl;
+        cout << "Invalid input! Please try again." << endl;
         continue;
     } else {
         choice = stoi(choiceStr);
@@ -61,7 +61,7 @@ int main(){
         cin>>structStr;
 
         if (!isNum(structStr)) {
-            cout << "Invalid Input!" << endl;
+            cout << "Invalid input! Please try again." << endl;
             continue;
         } else {
             structure = stoi(structStr);
@@ -86,13 +86,6 @@ int main(){
           string genreStr;
           int genre;
           cin >> genreStr;
-
-          if (!isNum(genreStr)) {
-              cout << "Invalid Input!" << endl;
-              continue;
-          } else {
-              genre = stoi(genreStr);
-          }
 
           cout << "\n" << endl;
         if (structure == 1){
@@ -125,7 +118,7 @@ int main(){
                 tree.findTopTenGenre("thriller");
             }
             else {
-                cout << "Please pick a valid number!\n\n" << endl;
+                cout << "Invalid input! Please try again." << endl;
             }
 
         }
@@ -160,7 +153,7 @@ int main(){
                 heap.printGenreTop10("Thriller");
             }
             else {
-                cout << "Please pick a valid number!\n\n" << endl;
+                cout << "Invalid input! Please try again." << endl;
             }
         }
 
@@ -186,7 +179,7 @@ int main(){
         }
 
       } else {
-          cout << "Please pick a valid choice!\n\n" << endl;
+          cout << "Invalid input! Please try again.\n\n" << endl;
       }
     }
 }

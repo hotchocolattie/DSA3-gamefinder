@@ -5,8 +5,9 @@
  * Heap structure referenced from: https://www.geeksforgeeks.org/max-heap-in-cpp/
  */
 
+
 // constructor, initialize heap
-// use the set up created by Anna
+// use the SetUp created by Anna
 Heap::Heap(std::vector<NodeHeap> games) {
     // Old line used for debugging: std::cout << "heap will be loading in: " << games.size() << " games" << std::endl;
 
@@ -16,10 +17,10 @@ Heap::Heap(std::vector<NodeHeap> games) {
 }
 
 // compare games, used by heapify
-bool Heap::compareGames(const NodeHeap& game1, const NodeHeap& game2) {
-    if ((game1.rating*10) > (game2.rating*10)) {
+bool Heap::compareGames(const NodeHeap &game1, const NodeHeap &game2) {
+    if ((game1.rating * 10) > (game2.rating * 10)) {
         return true;
-    } else if ((10*game1.rating) < (10*game2.rating)) {
+    } else if ((10 * game1.rating) < (10 * game2.rating)) {
         return false;
     }
 
@@ -51,20 +52,24 @@ void Heap::heapify(int key) {
 }
 
 
-// build heap from vector anna provided (called by constructor)
+// build heap from vector Anna's SetUp provided (called by constructor)
 void Heap::buildHeap() {
-    for (int i = (gamesHeap.size()-1) / 2; i >= 0; i--) {
+    for (int i = (gamesHeap.size() - 1) / 2; i >= 0; i--) {
         heapify(i);
     }
 }
 
-void Heap::printGame(const NodeHeap& game) {
-    std::cout << game.name << " (" + game.year + ") | Certification: " + game.cert + " | IMBD rating: " << game.rating << " | IMBD votes: " << game.votes << "\n======================================================================================================\n" << game.plot << "\n" << std::endl;
+void Heap::printGame(const NodeHeap &game) {
+    std::cout << game.name << " (" + game.year + ") | Certification: " + game.cert + " | IMBD rating: " << game.rating
+            << " | IMBD votes: " << game.votes <<
+            "\n======================================================================================================\n"
+            << game.plot << "\n" << std::endl;
+
     std::cout << "Genres: ";
 
     bool firstGame = true;
 
-    for (const auto& genre : game.genres) {
+    for (const auto &genre: game.genres) {
         if (genre.second) {
             if (!firstGame) {
                 std::cout << ", ";
@@ -88,7 +93,7 @@ void Heap::printTop10() {
     std::vector<NodeHeap> poppedGames;
 
     for (int i = 0; i < 10; i++) {
-        std::cout << (i+1) << ". ";
+        std::cout << (i + 1) << ". ";
 
         NodeHeap bestRating = pop();
         poppedGames.push_back(bestRating);
@@ -97,7 +102,7 @@ void Heap::printTop10() {
     }
 
     // restore heap!! need to put back popped elems
-    for (auto& game : poppedGames) {
+    for (auto &game: poppedGames) {
         gamesHeap.push_back(game);
     }
 
@@ -106,21 +111,20 @@ void Heap::printTop10() {
 
 // Planning:
 // To print by genre... since we've sorted by RATING as our key,
-// ermmm hmmm we might just have to brute force this by going thru each game and checking their genre maps individually, and print them if they match the wanted genre.
-// once you've all finished with the red-black tree filtering, lmk if you've implemented or thought of a better solution!
+// we might just have to brute force this by going through each game and checking their genre maps individually, and print them if they match the wanted genre.
 void Heap::printGenreTop10(std::string genreFind) {
     int weNeed10 = 0;
     std::vector<NodeHeap> poppedGames;
     NodeHeap bestRating;
 
-    std::cout << "Top 10 Games in " << genreFind << " genre by IMBD Rating (found using Heap data structure): \n\n" << std::endl;
+    std::cout << "Top 10 Games in " << genreFind << " genre by IMBD Rating (found using Heap data structure): \n\n" <<
+            std::endl;
 
-    for (const auto& game : gamesHeap) {
-
+    for (const auto &game: gamesHeap) {
         bestRating = pop();
 
         if (bestRating.genres.count(genreFind) && bestRating.genres.at(genreFind)) {
-            std::cout << (weNeed10+1) << ". ";
+            std::cout << (weNeed10 + 1) << ". ";
             printGame(bestRating);
             weNeed10++;
 
@@ -134,7 +138,7 @@ void Heap::printGenreTop10(std::string genreFind) {
     }
 
     // restore heap!! need to put back popped elems
-    for (auto& game : poppedGames) {
+    for (auto &game: poppedGames) {
         gamesHeap.push_back(game);
     }
 
@@ -145,10 +149,9 @@ void Heap::printGenreTop10(std::string genreFind) {
 // Planning:
 // I think we'll just have to iterate through the entire heap until we find a name match. Doesn't seem to be a better option.
 void Heap::findGame(std::string title) {
-
     bool gameFound = false;
 
-    for (const auto& game : gamesHeap) {
+    for (const auto &game: gamesHeap) {
         if (title == game.name) {
             std::cout << "Game found (using Heap data structure):\n" << std::endl;
             printGame(game);
@@ -162,12 +165,14 @@ void Heap::findGame(std::string title) {
     }
 }
 
-// procedure for popping: remove 1st elem in heap, replace with last elem, then heapify that element until the heap is resorted!!
+// procedure for popping: remove 1st elem in heap, replace with last elem, then heapify that element until the heap is resorted!
 NodeHeap Heap::pop() {
-    if (gamesHeap.empty()) {
+    /*if (gamesHeap.empty()) {
         std::cout << "Oops! The heap is empty. Please try again!" << std::endl;
         return NodeHeap();
     }
+    */
+    // used for debugging, phased out as heap will never change.
 
     NodeHeap bestRating = gamesHeap[0];
 

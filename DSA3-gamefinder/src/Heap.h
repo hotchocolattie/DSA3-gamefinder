@@ -30,43 +30,40 @@
  * - some function to insert new NodeHeap/game into heap (subfunction: to compare the rating of two games to ensure they're getting inserted correctly)
  *  ^^ actually it's needed to code the compare function separetly, as heapify will also use it
  * - some function that builds the heap by calling all the subfunctions listed above.
+ * - pop/top that can get the topmost element, then reheapify
  *
- * stuff from geeksforgeeks thats unneeded:
- * - top (could probably just replace with a top 10 getter, as we don't need the best game of all time, we need the top 10)
- * - pop (we won't be removing anything)
- * - delete key (we won't be removing anything)
+ * stuff from geeksforgeeks that's unneeded:
+ * - delete key (we won't be removing anything manually)
  *
  * stuff not in the geeksforgeeks we DO need:
  * - top 10 printer
  * - top 10 in [genre] printer (we will take in genre as a string!! will need to compare that against the map of genres (also stored as string) in each NodeHeap/game)
  * - print specific game by TITLE
- * ^^ omg guys i think search by title will actually be like O(n) TC :sob:
  */
 
 // template for each game NodeHeap
-    struct NodeHeap {
-        std::string name;
-        std::string url;
-        std::string year;
-        std::string cert;
-        float rating; // OUR KEY!!!
-        std::string votes;
-        std::string plot;
-        std::map<std::string, bool> genres;
+struct NodeHeap {
+    std::string name;
+    std::string url;
+    std::string year;
+    std::string cert;
+    float rating; // OUR KEY!!!
+    std::string votes;
+    std::string plot;
+    std::map<std::string, bool> genres;
 
-        // ok we need to add a constructor for the node as well
+    // ok we need to add a constructor for the node as well
 
-        NodeHeap() = default;
-    };
+    NodeHeap() = default;
+};
 
 class Heap {
-
 public:
     Heap() = default; // default heap, to be filled later
     Heap(std::vector<NodeHeap> gamesHeap); // constructor
-    void buildHeap(); // build heap, will call all the subfuncts
+    void buildHeap(); // build heap, will call all the subfunctions
     //void insert (NodeHeap game);
-    // insert has been phased out and everything's just done in the constructor and buildHeap now, since like. the heap will never change, it'll always be the same CSV. also the geeksforgeeks example used an array, and the insert function was mostly just about resizing the array, which we don't need to do, because we're using vectors!!!
+    // insert has been phased out and everything's just done in the constructor and buildHeap now, since the heap will never change, it'll always be the same CSV. also the geeksforgeeks example used an array, and the insert function was mostly just about resizing the array, which we don't need to do, because we're using vectors!!!
     void printTop10(); // print top 10
     void printGenreTop10(std::string genreFind); // print top 10 by genre
     void findGame(std::string title); // find game by title
@@ -76,7 +73,7 @@ private:
     std::vector<NodeHeap> gamesHeap; // vector that stores games
     void heapify(int key); // heapify
     //void insertGame OOPS this will be handled in setup as set up by Anna, we will just call the constructor with the games vector
-    bool compareGames(const NodeHeap& game1, const NodeHeap& game2); // compare two games
+    bool compareGames(const NodeHeap &game1, const NodeHeap &game2); // compare two games
     NodeHeap pop(); // need to pop to get max, then heapify.
-    void printGame(const NodeHeap& game); // strucutre used to print a game
+    void printGame(const NodeHeap &game); // structure used to print a game
 };
