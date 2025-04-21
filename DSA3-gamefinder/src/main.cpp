@@ -87,6 +87,13 @@ int main(){
           int genre;
           cin >> genreStr;
 
+          if (!isNum(genreStr)) {
+              cout << "Invalid input! Please try again." << endl;
+              continue;
+          } else {
+              genre = stoi(genreStr);
+          }
+
           cout << "\n" << endl;
         if (structure == 1){
 

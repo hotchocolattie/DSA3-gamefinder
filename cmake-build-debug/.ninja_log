@@ -43,3 +43,13 @@
 518	673	7669049590058616	DSA3_gamefinder.exe	4823ab90c74ddd1
 4	257	7669064315999667	CMakeFiles/DSA3_gamefinder.dir/DSA3-gamefinder/src/RedBlackTree.cpp.obj	dfbb29137cf87743
 3	127	7669064396455154	DSA3_gamefinder.exe	4823ab90c74ddd1
+3	367	7669066720865830	CMakeFiles/DSA3_gamefinder.dir/DSA3-gamefinder/src/Heap.cpp.obj	d232f5bf49ee9de9
+367	491	7669066724507685	DSA3_gamefinder.exe	4823ab90c74ddd1
+4	501	7669067781689705	CMakeFiles/DSA3_gamefinder.dir/DSA3-gamefinder/src/main.cpp.obj	25ade31581f27478
+501	633	7669067786654422	DSA3_gamefinder.exe	4823ab90c74ddd1
+4	501	7669068507719443	CMakeFiles/DSA3_gamefinder.dir/DSA3-gamefinder/src/main.cpp.obj	25ade31581f27478
+502	643	7669068512704825	DSA3_gamefinder.exe	4823ab90c74ddd1
+4	483	7669069468954660	CMakeFiles/DSA3_gamefinder.dir/DSA3-gamefinder/src/main.cpp.obj	25ade31581f27478
+483	628	7669069473749933	DSA3_gamefinder.exe	4823ab90c74ddd1
+4	519	7669069916273255	CMakeFiles/DSA3_gamefinder.dir/DSA3-gamefinder/src/main.cpp.obj	25ade31581f27478
+519	663	7669069921428202	DSA3_gamefinder.exe	4823ab90c74ddd1

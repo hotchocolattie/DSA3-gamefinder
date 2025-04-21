@@ -18,9 +18,9 @@ Heap::Heap(std::vector<NodeHeap> games) {
 
 // compare games, used by heapify
 bool Heap::compareGames(const NodeHeap &game1, const NodeHeap &game2) {
-    if ((game1.rating * 10) > (game2.rating * 10)) {
+    if (game1.rating > game2.rating) {
         return true;
-    } else if ((10 * game1.rating) < (10 * game2.rating)) {
+    } else if (game1.rating < game2.rating) {
         return false;
     }
 
