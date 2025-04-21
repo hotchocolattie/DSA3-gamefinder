@@ -24,7 +24,7 @@ using namespace std;
 		bool red; // each time we insert a node in a red black tree, it's red
 		vector<string> genre;
 		Node(string x, float r, vector<string> g, string p, int y, string a, int v, bool color = true, int h = 0) : 
-			name(x), rating(r), genre(g), plot(p), year(y), age_rating(a), votes(v), height(h), red(color),left(nullptr), right(nullptr) {}
+			name(x), rating(r), genre(g), plot(p), year(y), age_rating(a), votes(v), height(h), red(color),left(nullptr), right(nullptr), parent(nullptr){}
 
 	};
 

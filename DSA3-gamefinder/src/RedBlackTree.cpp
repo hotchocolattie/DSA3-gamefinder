@@ -24,27 +24,32 @@ Node* RedBlackTree::helperInsert(Node* curr, string name, vector<string> genres,
         return node;
     }
     if (rating < curr->rating) {
-        curr->left = helperInsert(curr->left, name, genres, plot, year, age_rating, votes, rating);
-        curr->left->parent = curr;
-        curr->left->red = true;
+        Node* inserted = helperInsert(curr->left, name, genres, plot, year, age_rating, votes, rating);
+        curr->left = inserted;
+        inserted->left = curr;
+        inserted->red = true;
+        return inserted;
     }
 
     if (rating > curr->rating) {
-        curr->right = helperInsert(curr->right, name, genres, plot, year, age_rating, votes, rating);
-        curr->right->parent = curr;
-        curr->right->red = true;
+        Node* inserted = helperInsert(curr->right, name, genres, plot, year, age_rating, votes, rating);
+        inserted->parent = curr;
+        inserted->red = true;
+        return inserted;
         // if the parent and the child are red, and the uncle is red, recolor the parent and uncle to black and check the grandparent
     }
     if (rating == curr->rating) {
         if (name > curr->name) {
-            curr->left = helperInsert(curr->left, name, genres, plot, year, age_rating, votes, rating);
-            curr->left->parent = curr;
-            curr->left->red = true;
+            Node* inserted = helperInsert(curr->left, name, genres, plot, year, age_rating, votes, rating);
+            inserted->parent = curr;
+            inserted->red = true;
+            return inserted;
         }
         else {
-            curr->right = helperInsert(curr->right, name, genres, plot, year, age_rating, votes, rating);
-            curr->right->parent = curr;
-            curr->right->red = true;
+            Node* inserted = helperInsert(curr->right, name, genres, plot, year, age_rating, votes, rating);
+            inserted->parent = curr;
+            inserted->red = true;
+            return inserted;
         }
     }
         return curr;
@@ -52,6 +57,8 @@ Node* RedBlackTree::helperInsert(Node* curr, string name, vector<string> genres,
 
 
 void RedBlackTree::case_violation(Node* curr) {
+    // Node* parent = curr->parent;
+    // Node* grandparent = parent->parent;
     // note: from the geeksforgeeks implementation (check discord for article link), i've noticed they have a while loop, while we're missing one
     // i think a reason this function is bugging out is because we're just doing one pass through, while we need to be going thru the whole tree
     // in geeksforgeek's their while statement is
@@ -59,14 +66,21 @@ void RedBlackTree::case_violation(Node* curr) {
     // i think this just means while we are not at the root AND our node is red like it's parent (illegal!! can't have two reds in a RBT), keep on balencing
     // im not sure if this RBT follows the same structure as geeksforgeek's RBT, but u guys would know this best, hopefully my suggestions help with debugging though!!
 
-    if (!curr || !curr->parent || !curr->parent->parent) {
-        return;
-    }
+    // if (!curr || !curr->parent || !curr->parent->parent) {
+    //     return;
+    // }
+    while (curr!=root && curr->red == true && curr->parent->red == true) {
+        Node* parent = curr->parent;
+        Node* grandparent = parent->parent;
+        Node* uncle = nullptr;
+        if (parent == grandparent->left) {
+            uncle = grandparent->right;
+        } else {
+            uncle = grandparent->left;
+        }
 
-    Node* parent = curr->parent;
-    Node* grandparent = parent->parent;
 
-    if (curr->red == true && parent->red == true) {
+
 
         // not sure this is the correct way to find uncle?
         // in geek's for geek's implementation, they do:
@@ -75,45 +89,46 @@ void RedBlackTree::case_violation(Node* curr) {
         // i think we're assigning uncle backwards and we've forgot to factor in parent
         // we could try if (parent == grandparent->left){uncle = grandparent->right} else {uncle = grandparent->left} or something like that
 
-        Node* uncle = (grandparent->left) ? grandparent->left : grandparent->right;
         if (uncle && uncle->red == true) { // when the uncle is red
             uncle->red = false;
             curr->red = false;
             grandparent->red = true;
-            case_violation(grandparent); // recursion does not seem to be part of the standard case_violation function (?)
+            curr = grandparent; // recursion does not seem to be part of the standard case_violation function (?)
             // i think we forgot to recolor parent here (?)
-        }
-        if (uncle && uncle->red == false) { // when the uncle is black
-            if (parent == grandparent->left && curr == parent->right) {// left right case
-                curr = rotate_left(parent);
-                curr->parent->red = false;
-                grandparent->red =true;
-                grandparent = rotate_right(grandparent);
-                rotate_helper(curr->parent,grandparent);
-            }
-            else if (parent == grandparent->right && curr == parent->left) { // right left case
-                curr = rotate_right(parent);
-                curr->parent->red = false;
-                grandparent->red = true;
-                grandparent = rotate_left(grandparent);
-                rotate_helper(curr->parent,grandparent);
-            }
-            else if (parent == grandparent->left && curr == parent->left) {// left left case
-                 parent->red = false;
-                 grandparent->red = true;
-                 grandparent = rotate_right(grandparent);
-                rotate_helper(curr->parent,grandparent);
-            }
-            else if (parent == grandparent->right && curr == parent->right) { // right right case
+        } else {
+            if (parent == grandparent->left) {
+                // when the uncle is black
+                if (curr == parent->right) {// left right case
+                    curr = rotate_left(parent);
+                    curr->parent->red = false;
+                    grandparent->red =true;
+                    curr->parent = grandparent;
+                }
+                Node* new_subtree_root = rotate_right(grandparent);
+                rotate_helper(grandparent, new_subtree_root);
                 parent->red = false;
                 grandparent->red = true;
-                grandparent = rotate_left(parent);
-                rotate_helper(curr->parent,grandparent);
+                rotate_right(grandparent);
+            } else {
+                if(curr == parent->left) { // right left case
+                    curr = rotate_right(parent);
+                    curr->parent->red = false;
+                    grandparent->red = true;
+                    curr->parent = grandparent;
+                }
+                Node* new_subtree_root = rotate_left(grandparent);
+                rotate_helper(grandparent, new_subtree_root);
+                parent->red = false;
+                grandparent->red = true;
+                rotate_left(grandparent);
             }
         }
-        // at the very end geeksforgeeks recolors the root as black, we don't seem to do anything to the root, maybe we can look into that?
     }
+    root->red = false;
 }
+       // at the very end geeksforgeeks recolors the root as black, we don't seem to do anything to the root, maybe we can look into that?
+
+
 
 
 
@@ -126,7 +141,7 @@ Node* RedBlackTree::rotate_left(Node* parent) {
     if (temp) {
         temp->parent = parent;
     }
-    new_parent->parent = parent->parent;
+    // new_parent->parent = parent->parent;
     parent->parent = new_parent;
     return new_parent;
 
@@ -134,12 +149,12 @@ Node* RedBlackTree::rotate_left(Node* parent) {
 Node* RedBlackTree::rotate_right(Node* parent) {
     Node* new_parent = parent->left;
     Node* temp = new_parent->right;
-    new_parent->left = parent;
+    new_parent->right = parent;
     parent->left = temp;
     if (temp) {
         temp->parent = parent;
     }
-    new_parent->parent = parent->parent;
+    // new_parent->parent = parent->parent;
     parent->parent = new_parent;
     return new_parent;
 
