@@ -80,7 +80,7 @@ void RedBlackTree::case_violation(Node* curr) {
             uncle->red = false;
             curr->red = false;
             grandparent->red = true;
-            case_violation(grandparent);
+            case_violation(grandparent); // recursion does not seem to be part of the standard case_violation function (?)
             // i think we forgot to recolor parent here (?)
         }
         if (uncle && uncle->red == false) { // when the uncle is black
