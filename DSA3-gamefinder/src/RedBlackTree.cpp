@@ -8,7 +8,7 @@ void RedBlackTree::insert(string name, vector<string> genres, string plot, int y
 
     /* helperInsert returns root, Spider Man :/// */
 
-    /*case_violation(newGame);*/
+    case_violation(newGame);
 
     cout << newGame->name << endl;
 
@@ -49,7 +49,16 @@ Node* RedBlackTree::helperInsert(Node* curr, string name, vector<string> genres,
     }
         return curr;
     }
+
+
 void RedBlackTree::case_violation(Node* curr) {
+    // note: from the geeksforgeeks implementation (check discord for article link), i've noticed they have a while loop, while we're missing one
+    // i think a reason this function is bugging out is because we're just doing one pass through, while we need to be going thru the whole tree
+    // in geeksforgeek's their while statement is
+    // while (node != root && node->color == RED && node->parent->color == RED) {... code here}
+    // i think this just means while we are not at the root AND our node is red like it's parent (illegal!! can't have two reds in a RBT), keep on balencing
+    // im not sure if this RBT follows the same structure as geeksforgeek's RBT, but u guys would know this best, hopefully my suggestions help with debugging though!!
+
     if (!curr || !curr->parent || !curr->parent->parent) {
         return;
     }
@@ -58,6 +67,14 @@ void RedBlackTree::case_violation(Node* curr) {
     Node* grandparent = parent->parent;
 
     if (curr->red == true && parent->red == true) {
+
+        // not sure this is the correct way to find uncle?
+        // in geek's for geek's implementation, they do:
+        //if parent === grandparent->left { uncle = grandparent->right .... other code}
+        // else { uncle = grandparent->left}
+        // i think we're assigning uncle backwards and we've forgot to factor in parent
+        // we could try if (parent == grandparent->left){uncle = grandparent->right} else {uncle = grandparent->left} or something like that
+
         Node* uncle = (grandparent->left) ? grandparent->left : grandparent->right;
         if (uncle && uncle->red == true) { // when the uncle is red
             uncle->red = false;
@@ -95,6 +112,10 @@ void RedBlackTree::case_violation(Node* curr) {
         }
     }
 }
+
+
+
+
 Node* RedBlackTree::rotate_left(Node* parent) {
     Node* new_parent = parent->right;
     Node* temp = new_parent->left;
