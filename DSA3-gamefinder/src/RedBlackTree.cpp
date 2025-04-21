@@ -81,6 +81,7 @@ void RedBlackTree::case_violation(Node* curr) {
             curr->red = false;
             grandparent->red = true;
             case_violation(grandparent);
+            // i think we forgot to recolor parent here (?)
         }
         if (uncle && uncle->red == false) { // when the uncle is black
             if (parent == grandparent->left && curr == parent->right) {// left right case
@@ -110,6 +111,7 @@ void RedBlackTree::case_violation(Node* curr) {
                 rotate_helper(curr->parent,grandparent);
             }
         }
+        // at the very end geeksforgeeks recolors the root as black, we don't seem to do anything to the root, maybe we can look into that?
     }
 }
 
