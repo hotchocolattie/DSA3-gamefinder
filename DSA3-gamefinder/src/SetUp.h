@@ -106,15 +106,15 @@ void loadData(RedBlackTree& tree /*add paramter for heap*/, Heap& heap) {
 		getline(source, scifi, '|');
 		getline(source, thriller, '|');
 
-		addGenres("action", action, genres);
-		addGenres("adventure", adventure, genres);
-		addGenres("comedy", comedy, genres);
-		addGenres("crime", crime, genres);
-		addGenres("family", family, genres);
-		addGenres("fantasy", fantasy, genres);
-		addGenres("mystery", mystery, genres);
-		addGenres("scifi", scifi, genres);
-		addGenres("thriller", thriller, genres);
+		addGenres("Action", action, genres);
+		addGenres("Adventure", adventure, genres);
+		addGenres("Comedy", comedy, genres);
+		addGenres("Crime", crime, genres);
+		addGenres("Family", family, genres);
+		addGenres("Fantasy", fantasy, genres);
+		addGenres("Mystery", mystery, genres);
+		addGenres("Sci-Fi", scifi, genres);
+		addGenres("Thriller", thriller, genres);
 
 
 		int number = stringtoInt(s_number);

@@ -12,8 +12,8 @@
 // 4. Cleaned up rotations/a little refactoring
 
 
-void RedBlackTree::insert(string name, vector<string> genres, string plot, int year, string age_rating, int votes, float rating) {
-    
+void RedBlackTree::insert(string name, vector<string> genres, string plot, int year, string age_rating, int votes,
+                          float rating) {
     // HELPER INSERT returns the root of the tree
     // In order to call case_violation, we must get the last inserted node...
 
@@ -31,17 +31,16 @@ void RedBlackTree::insert(string name, vector<string> genres, string plot, int y
     //else {
     //    cout << "black" << endl;
     //}
-
 }
 
 // Restored Laurence's Previous Insert
 
-Node* RedBlackTree::helperInsert(Node* curr, string name, vector<string> genres, string plot, int year, string age_rating, int votes, float rating) {
-
+Node *RedBlackTree::helperInsert(Node *curr, string name, vector<string> genres, string plot, int year,
+                                 string age_rating, int votes, float rating) {
     // Base case
 
     if (curr == nullptr) {
-        Node* node = new Node(name, rating, genres, plot, year, age_rating, votes, true);
+        Node *node = new Node(name, rating, genres, plot, year, age_rating, votes, true);
         currNode = node;
         node->height = 1;
         if (root == nullptr) {
@@ -72,8 +71,7 @@ Node* RedBlackTree::helperInsert(Node* curr, string name, vector<string> genres,
         if (name > curr->name) {
             curr->left = helperInsert(curr->left, name, genres, plot, year, age_rating, votes, rating);
             curr->left->parent = curr;
-        }
-        else {
+        } else {
             curr->right = helperInsert(curr->right, name, genres, plot, year, age_rating, votes, rating);
             curr->right->parent = curr;
         }
@@ -86,8 +84,7 @@ Node* RedBlackTree::helperInsert(Node* curr, string name, vector<string> genres,
 // A recursive appraoch is used to ensure that two consecutive nodes are not red
 
 
-void RedBlackTree::case_violation(Node* curr) {
-
+void RedBlackTree::case_violation(Node *curr) {
     // IF we get to the root, we finish and return nothing
 
     if (!curr || !curr->parent || !curr->parent->parent) {
@@ -97,19 +94,17 @@ void RedBlackTree::case_violation(Node* curr) {
 
     // Grab the nodes parent, and grandparent
 
-    Node* parent = curr->parent;
-    Node* grandparent = parent->parent;
+    Node *parent = curr->parent;
+    Node *grandparent = parent->parent;
 
     // DO THIS only if there is two consecutive red nodes.
 
     if (curr->red == true && curr->parent->red == true) {
-
-        Node* uncle = (parent == grandparent->left) ? grandparent->right : grandparent->left;
+        Node *uncle = (parent == grandparent->left) ? grandparent->right : grandparent->left;
 
         // CHECK if the parent and the uncle are the same color...red
 
         if (uncle && uncle->red == true) {
-
             uncle->red = false;
             parent->red = false;
             grandparent->red = true;
@@ -118,69 +113,59 @@ void RedBlackTree::case_violation(Node* curr) {
             case_violation(grandparent);
         }
 
-        // The uncle is black here. Based on the case, we rotate and recolor nodes. 
+        // The uncle is black here. Based on the case, we rotate and recolor nodes.
 
         else {
-
-            if (parent == grandparent->left && curr == parent->right) {// left right case
+            if (parent == grandparent->left && curr == parent->right) {
+                // left right case
 
                 curr = rotate_left(parent);
                 curr->parent->red = false;
                 grandparent->red = true;
                 rotate_right(grandparent);
-            }
-
-            else if (parent == grandparent->left && curr == parent->left) {// left left case
+            } else if (parent == grandparent->left && curr == parent->left) {
+                // left left case
                 parent->red = false;
                 grandparent->red = true;
                 rotate_right(grandparent);
-            }
-
-
-            else if (parent == grandparent->right && curr == parent->left) { // right left case
+            } else if (parent == grandparent->right && curr == parent->left) {
+                // right left case
                 curr = rotate_right(parent);
                 curr->parent->red = false;
                 grandparent->red = true;
                 rotate_left(grandparent);
-
-            }
-
-
-            else if (parent == grandparent->right && curr == parent->right) { // right right case
+            } else if (parent == grandparent->right && curr == parent->right) {
+                // right right case
                 parent->red = false;
                 grandparent->red = true;
                 rotate_left(grandparent);
             }
-            
         }
     }
-
 }
 
-   
-Node* RedBlackTree::rotate_left(Node* o_parent) {
+
+Node *RedBlackTree::rotate_left(Node *o_parent) {
+    Node *new_parent = o_parent->right;
 
 
-    Node* new_parent = o_parent->right;
+    // This makes sure that children attached to the new parent get attached to the old parent's right
 
-
-    // This makes sure that children attached to the new parent get attached to the old parent's right 
-
-    Node* temp = new_parent->left;
+    Node *temp = new_parent->left;
     o_parent->right = temp;
 
-    // IF a node exists, we have to establish a valid parent 
+    // IF a node exists, we have to establish a valid parent
 
     if (temp != nullptr) {
         temp->parent = o_parent;
     }
 
-    // Make the new parent's parent be old parent's parent 
+    // Make the new parent's parent be old parent's parent
 
     new_parent->parent = o_parent->parent;
 
     rotate_helper(o_parent, new_parent);
-    
+
     // rotation occurs
 
     new_parent->left = o_parent;
@@ -201,28 +186,26 @@ Node* RedBlackTree::rotate_left(Node* o_parent) {
     //// new_parent->parent = parent->parent;
     //parent->parent = new_parent;
     //return new_parent;
-
 }
 
-Node* RedBlackTree::rotate_right(Node* o_parent) {
-
+Node *RedBlackTree::rotate_right(Node *o_parent) {
     // o stands for old,, old parent.
 
 
-    Node* new_parent = o_parent->left;
+    Node *new_parent = o_parent->left;
 
-    // This makes sure that children attached to the new parent get attached to the old parent's left 
+    // This makes sure that children attached to the new parent get attached to the old parent's left
 
-    Node* temp = new_parent->right;
+    Node *temp = new_parent->right;
     o_parent->left = temp;
 
-    // IF a node exists, we have to establish a valid parent 
+    // IF a node exists, we have to establish a valid parent
 
     if (temp != nullptr) {
         temp->parent = o_parent;
     }
 
-    // Make the new_parent's parent be old_parent's parent 
+    // Make the new_parent's parent be old_parent's parent
 
     new_parent->parent = o_parent->parent;
     rotate_helper(o_parent, new_parent);
@@ -245,30 +228,29 @@ Node* RedBlackTree::rotate_right(Node* o_parent) {
     //// new_parent->parent = parent->parent;
     //parent->parent = new_parent;
     //return new_parent;
-
-
 }
 
 
-void RedBlackTree::rotate_helper(Node* &old_curr, Node* &new_curr) { // reconnect the new root to the rest of the tree
+void RedBlackTree::rotate_helper(Node * &old_curr, Node * &new_curr) {
+    // reconnect the new root to the rest of the tree
 
     // This function reconnects the new root to the rest of the tree, and decides which side of the parent the node should attached to...
 
-    // IF the parent is null, make the new root of the whole tree, the new_parent 
+    // IF the parent is null, make the new root of the whole tree, the new_parent
 
     if (old_curr->parent == nullptr) {
         root = new_curr;
-    }
-    else {
-        if (old_curr == old_curr->parent->left) { // IF the old parent was on the grandparents, left, then attach the new parent to the left of the grandparent
+    } else {
+        if (old_curr == old_curr->parent->left) {
+            // IF the old parent was on the grandparents, left, then attach the new parent to the left of the grandparent
             old_curr->parent->left = new_curr;
-        } 
-        else if (old_curr = old_curr->parent->right) { // IF the old parent was on the grandparents, right, then attach the new parent to the right of the grandparent
+        } else if (old_curr = old_curr->parent->right) {
+            // IF the old parent was on the grandparents, right, then attach the new parent to the right of the grandparent
             old_curr->parent->right = new_curr;
         }
     }
 
-    // Old Code 
+    // Old Code
     //if (old_curr->parent == nullptr) {
     //    root = new_curr;
     //} else if (old_curr == old_curr->parent->left) {
@@ -281,10 +263,7 @@ void RedBlackTree::rotate_helper(Node* &old_curr, Node* &new_curr) { // reconnec
     //}
 
     // This connects to a parent
-
 }
-
-
 
 
 /*================================================ FUNCTIONS TO OPERATE ON RED BLACK TREE ==============================================================================*/
@@ -296,53 +275,51 @@ void RedBlackTree::findTopTen() {
     cout << "Top 10 Games by IMBD Rating (found using Red Black Tree data structure): \n\n" << std::endl;
     helperfindTopTen(this->root);
 }
+
 void RedBlackTree::findTopTenGenre(string genre) {
     counter = 0;
     string genre_copy = genre;
 
     // Capitalize the genre input for printing purposes
 
-    for (char& c : genre) {
+    for (char &c: genre) {
         c = toupper(c);
         break;
     }
 
-    cout << "Top 10 Games in " << genre << " by IMBD Rating (found using Red Black Tree Data Structure) \n\n" << std::endl;
+    cout << "Top 10 Games in " << genre << " by IMBD Rating (found using Red Black Tree Data Structure) \n\n" <<
+            std::endl;
     helperfindTopTenGenre(this->root, genre_copy);
 }
-void RedBlackTree::findGame(string name) {
 
-    Node* searchNode = search(this->root, name);
+void RedBlackTree::findGame(string name) {
+    Node *searchNode = search(this->root, name);
 
     if (searchNode != nullptr) {
-
         printGame(searchNode);
-    }
-    else {
-
+    } else {
         cout << "Sorry, it looks like we don't have the game here :(" << endl;
     }
 }
 
-void RedBlackTree::helperfindTopTen(Node* root) {
- // AMF 4/18/25 - This findTopTen() is based off an inOrder traversal but in 
- // the reverse order (right->root->left) to get the game with the max rating (Since a RBT is also a BST)
+void RedBlackTree::helperfindTopTen(Node *root) {
+    // AMF 4/18/25 - This findTopTen() is based off an inOrder traversal but in
+    // the reverse order (right->root->left) to get the game with the max rating (Since a RBT is also a BST)
 
     if (root == nullptr || counter == 10) {
         return;
     }
-   
+
     helperfindTopTen(root->right);
     if (counter < 10) {
         printGame(root);
     }
     counter++;
     helperfindTopTen(root->left);
-
 }
-void RedBlackTree::helperfindTopTenGenre(Node* root, string genre) {
 
-    // AMF 4/18/25 - findTopTenGenre() is based off a reverse inOrder traversal, 
+void RedBlackTree::helperfindTopTenGenre(Node *root, string genre) {
+    // AMF 4/18/25 - findTopTenGenre() is based off a reverse inOrder traversal,
     // IF selected genre is in the game's vector of genres, print it out
 
     bool genreFound = false;
@@ -367,7 +344,8 @@ void RedBlackTree::helperfindTopTenGenre(Node* root, string genre) {
 
     helperfindTopTenGenre(root->left, genre);
 }
-Node* RedBlackTree::search(Node* curr, string name) {
+
+Node *RedBlackTree::search(Node *curr, string name) {
     // AMF 4/18/25 - The search function is implemented as a DFS
 
     if (curr == nullptr) {
@@ -386,21 +364,20 @@ Node* RedBlackTree::search(Node* curr, string name) {
     else {
         return search(curr->right, name);
     }
-
 }
-void RedBlackTree::helperInorder(Node* curr, bool& first) {
+
+void RedBlackTree::helperInorder(Node *curr, bool &first) {
     first = true;
     if (curr == nullptr) {
         return;
     }
-    helperInorder(curr->left,first);
+    helperInorder(curr->left, first);
     if (!first) {
-        cout<<", ";
+        cout << ", ";
     }
-    cout<<curr->name << " : " << curr->rating << endl;
+    cout << curr->name << " : " << curr->rating << endl;
     first = false;
-    helperInorder(curr->right,first);
-
+    helperInorder(curr->right, first);
 }
 
 void RedBlackTree::inOrder() {
@@ -408,8 +385,11 @@ void RedBlackTree::inOrder() {
     helperInorder(this->root, current);
 }
 
-void RedBlackTree::printGame(Node* root) {
-    cout << counter + 1 << ". " << root->name << " (" << root->year << ")" << " | Certification: " + root->age_rating + " | IMBD rating : " << root->rating << " | IMBD votes : " << root->votes << "\n======================================================================================================\n" << root->plot << "\n" << std::endl;
+void RedBlackTree::printGame(Node *root) {
+    cout << counter + 1 << ". " << root->name << " (" << root->year << ")" << " | Certification: " + root->age_rating +
+            " | IMBD rating : " << root->rating << " | IMBD votes : " << root->votes <<
+            "\n======================================================================================================\n"
+            << root->plot << "\n" << std::endl;
     cout << "Genres: ";
 
     for (int i = 0; i < root->genre.size(); i++) {
@@ -419,11 +399,5 @@ void RedBlackTree::printGame(Node* root) {
             cout << root->genre[i] << ", ";
     }
 
-    cout << endl;
+    cout << "\n" << endl;
 }
-
-
-
-
-
-

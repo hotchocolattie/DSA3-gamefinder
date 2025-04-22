@@ -80,7 +80,9 @@ void Heap::printGame(const NodeHeap &game) {
         }
     }
 
-    std::cout << "\n\n\n";
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
 }
 
 
@@ -93,12 +95,12 @@ void Heap::printTop10() {
     std::vector<NodeHeap> poppedGames;
 
     for (int i = 0; i < 10; i++) {
-        std::cout << (i + 1) << ". ";
-
         NodeHeap bestRating = pop();
-        poppedGames.push_back(bestRating);
 
+        std::cout << (i + 1) << ". ";
         printGame(bestRating);
+
+        poppedGames.push_back(bestRating);
     }
 
     // restore heap!! need to put back popped elems
