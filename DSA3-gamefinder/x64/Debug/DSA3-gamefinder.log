@@ -1,5 +1,0 @@
-﻿  RedBlackTree.cpp
-  main.cpp
-C:\Users\amfol\source\repos\DSA3-gamefinder\DSA3-gamefinder\src\main.cpp(20,13): warning C4834: discarding return value of function with [[nodiscard]] attribute
-  Generating Code...
-  DSA3-gamefinder.vcxproj -> C:\Users\amfol\source\repos\DSA3-gamefinder\x64\Debug\DSA3-gamefinder.exe
