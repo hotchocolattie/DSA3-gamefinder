@@ -24,7 +24,7 @@ bool Heap::compareGames(const NodeHeap &game1, const NodeHeap &game2) {
         return false;
     }
 
-    // ok, sometimes two games might be tied for rating.
+    // sometimes two games might be tied for rating.
     // in that case, we will sort by name a-z
 
     return game1.name < game2.name;
