@@ -21,7 +21,7 @@ using namespace std;
 		int height;
 		int year;
 		int votes;
-		bool red; // each time we insert a node in a red black tree, it's red
+		bool red = true; // each time we insert a node in a red black tree, it's red
 		vector<string> genre;
 		Node(string x, float r, vector<string> g, string p, int y, string a, int v, bool color = true, int h = 0) : 
 			name(x), rating(r), genre(g), plot(p), year(y), age_rating(a), votes(v), height(h), red(color),left(nullptr), right(nullptr), parent(nullptr){}
@@ -32,9 +32,10 @@ class RedBlackTree {
 
 private:
 	int counter = 0;
+	Node* currNode = nullptr;
 	Node* root = nullptr;
 
-	/*================================================ FUNCTIONS TO OPERATE ON RED BLACK TREE ==============================================================================*/
+	/*================================================ HELPER FUNCTIONS ==============================================================================*/
 
 	Node* helperInsert(Node* curr, string name, vector<string> genres, string plot, int year, string age_rating, int votes, float rating);
 	Node* rotate_left(Node* parent);
@@ -44,7 +45,7 @@ private:
 	void helperfindTopTenGenre(Node* root, string genre);
 	void helperfindTopTen(Node* root);
 	void printGame(Node* game);
-	void rotate_helper(Node* old_curr,Node* new_curr);
+	void rotate_helper(Node* &old_curr,Node* &new_curr);
 	void inOrder();
 
 public:

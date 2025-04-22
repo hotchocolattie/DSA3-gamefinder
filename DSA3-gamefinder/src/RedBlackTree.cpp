@@ -3,19 +3,46 @@
 
 /*================================================ FUNCTIONS TO CREATE RED BLACK TREE ==============================================================================*/
 
+// AMF - 4/22/25 
+// UPDATES: Some of the more relavent changes to help get the Red Black Tree Working...
+// 1. A private varible named currNode is private and can locate the last inserted node, this solves the problem of having helperInsert return the root only. 
+// currNode acts like a bookmark
+// 2. Fixed the the retrival of the uncle in case_violation, we check what side of the grandparent the parent is on to determine the uncle
+// 3. Had rotate_helper be called in the rotation functions
+// 4. Cleaned up rotations/a little refactoring
+
+
 void RedBlackTree::insert(string name, vector<string> genres, string plot, int year, string age_rating, int votes, float rating) {
-    Node* newGame = helperInsert(root, name, genres, plot, year, age_rating, votes, rating);
+    
+    // HELPER INSERT returns the root of the tree
+    // In order to call case_violation, we must get the last inserted node...
 
-    /* helperInsert returns root, Spider Man :/// */
+    root = helperInsert(root, name, genres, plot, year, age_rating, votes, rating);
+    case_violation(currNode);
 
-    case_violation(newGame);
+    // UNCOMMENT ME FOR DEBUG/TEST //
 
-    cout << newGame->name << endl;
+    //cout << root->name << endl;
+    //cout << currNode->name << ": ";
+    //cout << currNode->rating <<  " ";
+    //if (currNode->red == true) {
+    //    cout << "red" << endl;
+    //}
+    //else {
+    //    cout << "black" << endl;
+    //}
 
- }
+}
+
+// Restored Laurence's Previous Insert
+
 Node* RedBlackTree::helperInsert(Node* curr, string name, vector<string> genres, string plot, int year, string age_rating, int votes, float rating) {
+
+    // Base case
+
     if (curr == nullptr) {
-        Node* node = new Node(name,rating, genres, plot, year, age_rating, votes, true);
+        Node* node = new Node(name, rating, genres, plot, year, age_rating, votes, true);
+        currNode = node;
         node->height = 1;
         if (root == nullptr) {
             root = node;
@@ -23,153 +50,238 @@ Node* RedBlackTree::helperInsert(Node* curr, string name, vector<string> genres,
         }
         return node;
     }
+
+    // IF the rating is less than the current rating
+
     if (rating < curr->rating) {
-        Node* inserted = helperInsert(curr->left, name, genres, plot, year, age_rating, votes, rating);
-        curr->left = inserted;
-        inserted->left = curr;
-        inserted->red = true;
-        return inserted;
+        curr->left = helperInsert(curr->left, name, genres, plot, year, age_rating, votes, rating);
+        curr->left->parent = curr;
     }
 
+    // IF the rating is greater than the current rating
+
     if (rating > curr->rating) {
-        Node* inserted = helperInsert(curr->right, name, genres, plot, year, age_rating, votes, rating);
-        inserted->parent = curr;
-        inserted->red = true;
-        return inserted;
+        curr->right = helperInsert(curr->right, name, genres, plot, year, age_rating, votes, rating);
+        curr->right->parent = curr;
         // if the parent and the child are red, and the uncle is red, recolor the parent and uncle to black and check the grandparent
     }
+
+    // IF the rating equals the current rating, order them alphabetically
+
     if (rating == curr->rating) {
         if (name > curr->name) {
-            Node* inserted = helperInsert(curr->left, name, genres, plot, year, age_rating, votes, rating);
-            inserted->parent = curr;
-            inserted->red = true;
-            return inserted;
+            curr->left = helperInsert(curr->left, name, genres, plot, year, age_rating, votes, rating);
+            curr->left->parent = curr;
         }
         else {
-            Node* inserted = helperInsert(curr->right, name, genres, plot, year, age_rating, votes, rating);
-            inserted->parent = curr;
-            inserted->red = true;
-            return inserted;
+            curr->right = helperInsert(curr->right, name, genres, plot, year, age_rating, votes, rating);
+            curr->right->parent = curr;
         }
     }
-        return curr;
-    }
+
+    return curr;
+}
+
+// Restored Laurence's Previous Case Violation
+// A recursive appraoch is used to ensure that two consecutive nodes are not red
 
 
 void RedBlackTree::case_violation(Node* curr) {
-    // Node* parent = curr->parent;
-    // Node* grandparent = parent->parent;
-    // note: from the geeksforgeeks implementation (check discord for article link), i've noticed they have a while loop, while we're missing one
-    // i think a reason this function is bugging out is because we're just doing one pass through, while we need to be going thru the whole tree
-    // in geeksforgeek's their while statement is
-    // while (node != root && node->color == RED && node->parent->color == RED) {... code here}
-    // i think this just means while we are not at the root AND our node is red like it's parent (illegal!! can't have two reds in a RBT), keep on balencing
-    // im not sure if this RBT follows the same structure as geeksforgeek's RBT, but u guys would know this best, hopefully my suggestions help with debugging though!!
 
-    // if (!curr || !curr->parent || !curr->parent->parent) {
-    //     return;
-    // }
-    while (curr!=root && curr->red == true && curr->parent->red == true) {
-        Node* parent = curr->parent;
-        Node* grandparent = parent->parent;
-        Node* uncle = nullptr;
-        if (parent == grandparent->left) {
-            uncle = grandparent->right;
-        } else {
-            uncle = grandparent->left;
+    // IF we get to the root, we finish and return nothing
+
+    if (!curr || !curr->parent || !curr->parent->parent) {
+        root->red = false; // Make sure that the root is always black
+        return;
+    }
+
+    // Grab the nodes parent, and grandparent
+
+    Node* parent = curr->parent;
+    Node* grandparent = parent->parent;
+
+    // DO THIS only if there is two consecutive red nodes.
+
+    if (curr->red == true && curr->parent->red == true) {
+
+        Node* uncle = (parent == grandparent->left) ? grandparent->right : grandparent->left;
+
+        // CHECK if the parent and the uncle are the same color...red
+
+        if (uncle && uncle->red == true) {
+
+            uncle->red = false;
+            parent->red = false;
+            grandparent->red = true;
+
+            // RECURSION CALL
+            case_violation(grandparent);
         }
 
+        // The uncle is black here. Based on the case, we rotate and recolor nodes. 
 
+        else {
 
+            if (parent == grandparent->left && curr == parent->right) {// left right case
 
-        // not sure this is the correct way to find uncle?
-        // in geek's for geek's implementation, they do:
-        //if parent === grandparent->left { uncle = grandparent->right .... other code}
-        // else { uncle = grandparent->left}
-        // i think we're assigning uncle backwards and we've forgot to factor in parent
-        // we could try if (parent == grandparent->left){uncle = grandparent->right} else {uncle = grandparent->left} or something like that
+                curr = rotate_left(parent);
+                curr->parent->red = false;
+                grandparent->red = true;
+                rotate_right(grandparent);
+            }
 
-        if (uncle && uncle->red == true) { // when the uncle is red
-            uncle->red = false;
-            curr->red = false;
-            grandparent->red = true;
-            curr = grandparent; // recursion does not seem to be part of the standard case_violation function (?)
-            // i think we forgot to recolor parent here (?)
-        } else {
-            if (parent == grandparent->left) {
-                // when the uncle is black
-                if (curr == parent->right) {// left right case
-                    curr = rotate_left(parent);
-                    curr->parent->red = false;
-                    grandparent->red =true;
-                    curr->parent = grandparent;
-                }
-                Node* new_subtree_root = rotate_right(grandparent);
-                rotate_helper(grandparent, new_subtree_root);
+            else if (parent == grandparent->left && curr == parent->left) {// left left case
                 parent->red = false;
                 grandparent->red = true;
                 rotate_right(grandparent);
-            } else {
-                if(curr == parent->left) { // right left case
-                    curr = rotate_right(parent);
-                    curr->parent->red = false;
-                    grandparent->red = true;
-                    curr->parent = grandparent;
-                }
-                Node* new_subtree_root = rotate_left(grandparent);
-                rotate_helper(grandparent, new_subtree_root);
+            }
+
+
+            else if (parent == grandparent->right && curr == parent->left) { // right left case
+                curr = rotate_right(parent);
+                curr->parent->red = false;
+                grandparent->red = true;
+                rotate_left(grandparent);
+
+            }
+
+
+            else if (parent == grandparent->right && curr == parent->right) { // right right case
                 parent->red = false;
                 grandparent->red = true;
                 rotate_left(grandparent);
             }
+            
         }
     }
-    root->red = false;
+
 }
-       // at the very end geeksforgeeks recolors the root as black, we don't seem to do anything to the root, maybe we can look into that?
+
+   
+Node* RedBlackTree::rotate_left(Node* o_parent) {
 
 
+    Node* new_parent = o_parent->right;
 
 
+    // This makes sure that children attached to the new parent get attached to the old parent's right 
 
-
-Node* RedBlackTree::rotate_left(Node* parent) {
-    Node* new_parent = parent->right;
     Node* temp = new_parent->left;
-    new_parent->left = parent;
-    parent->right = temp;
-    if (temp) {
-        temp->parent = parent;
+    o_parent->right = temp;
+
+    // IF a node exists, we have to establish a valid parent 
+
+    if (temp != nullptr) {
+        temp->parent = o_parent;
     }
-    // new_parent->parent = parent->parent;
-    parent->parent = new_parent;
-    return new_parent;
+
+    // Make the new parent's parent be old parent's parent 
+
+    new_parent->parent = o_parent->parent;
+
+    rotate_helper(o_parent, new_parent);
+    
+    // rotation occurs
+
+    new_parent->left = o_parent;
+    o_parent->parent = new_parent;
+
+    return o_parent;
+
+    // Older Code
+    //Node* new_parent = parent->right;
+    //Node* temp = new_parent->left;
+
+    //new_parent->left = parent;
+    //parent->right = temp;
+
+    //if (temp) {
+    //    temp->parent = parent;
+    //}
+    //// new_parent->parent = parent->parent;
+    //parent->parent = new_parent;
+    //return new_parent;
 
 }
-Node* RedBlackTree::rotate_right(Node* parent) {
-    Node* new_parent = parent->left;
+
+Node* RedBlackTree::rotate_right(Node* o_parent) {
+
+    // o stands for old,, old parent.
+
+
+    Node* new_parent = o_parent->left;
+
+    // This makes sure that children attached to the new parent get attached to the old parent's left 
+
     Node* temp = new_parent->right;
-    new_parent->right = parent;
-    parent->left = temp;
-    if (temp) {
-        temp->parent = parent;
+    o_parent->left = temp;
+
+    // IF a node exists, we have to establish a valid parent 
+
+    if (temp != nullptr) {
+        temp->parent = o_parent;
     }
-    // new_parent->parent = parent->parent;
-    parent->parent = new_parent;
-    return new_parent;
+
+    // Make the new_parent's parent be old_parent's parent 
+
+    new_parent->parent = o_parent->parent;
+    rotate_helper(o_parent, new_parent);
+
+    // rotation occurs
+
+    new_parent->right = o_parent;
+    o_parent->parent = new_parent;
+
+    return o_parent;
+
+    // Older Code
+    //Node* new_parent = parent->left;
+    //Node* temp = new_parent->right;
+    //new_parent->right = parent;
+    //parent->left = temp;
+    //if (temp) {
+    //    temp->parent = parent;
+    //}
+    //// new_parent->parent = parent->parent;
+    //parent->parent = new_parent;
+    //return new_parent;
+
 
 }
-void RedBlackTree::rotate_helper(Node* old_curr, Node* new_curr) { // reconnect the new root to the rest of the tree
+
+
+void RedBlackTree::rotate_helper(Node* &old_curr, Node* &new_curr) { // reconnect the new root to the rest of the tree
+
+    // This function reconnects the new root to the rest of the tree, and decides which side of the parent the node should attached to...
+
+    // IF the parent is null, make the new root of the whole tree, the new_parent 
+
     if (old_curr->parent == nullptr) {
         root = new_curr;
-    } else if (old_curr == old_curr->parent->left) {
-        old_curr->parent->left = new_curr;
-    } else {
-        old_curr->parent->right = new_curr;
     }
-    if (new_curr) {
-        new_curr->parent = old_curr->parent;
+    else {
+        if (old_curr == old_curr->parent->left) { // IF the old parent was on the grandparents, left, then attach the new parent to the left of the grandparent
+            old_curr->parent->left = new_curr;
+        } 
+        else if (old_curr = old_curr->parent->right) { // IF the old parent was on the grandparents, right, then attach the new parent to the right of the grandparent
+            old_curr->parent->right = new_curr;
+        }
     }
+
+    // Old Code 
+    //if (old_curr->parent == nullptr) {
+    //    root = new_curr;
+    //} else if (old_curr == old_curr->parent->left) {
+    //    old_curr->parent->left = new_curr;
+    //} else {
+    //    old_curr->parent->right = new_curr;
+    //}
+    //if (new_curr) {
+    //    new_curr->parent = old_curr->parent;
+    //}
+
+    // This connects to a parent
+
 }
 
 
@@ -204,18 +316,7 @@ void RedBlackTree::findGame(string name) {
 
     if (searchNode != nullptr) {
 
-        // printing out game information...
-        cout << "\n" << "Name: " << searchNode->name << endl;
-        cout << "Rating: " << searchNode->rating << endl;
-        cout << "Genres: ";
-
-        for (int i = 0; i < searchNode->genre.size(); i++) {
-            if (i == searchNode->genre.size() - 1)
-                cout << searchNode->genre[i] << endl;
-            else 
-                cout << searchNode->genre[i] << ", ";
-        }
-        cout << "Plot: " << searchNode->plot << endl << "\n";
+        printGame(searchNode);
     }
     else {
 
@@ -301,12 +402,14 @@ void RedBlackTree::helperInorder(Node* curr, bool& first) {
     helperInorder(curr->right,first);
 
 }
+
 void RedBlackTree::inOrder() {
     bool current = true;
     helperInorder(this->root, current);
 }
+
 void RedBlackTree::printGame(Node* root) {
-    cout << counter + 1 << ". " << root->name << "(" << root->year << ")" << " | Certification: " + root->age_rating + " | IMBD rating : " << root->rating << " | IMBD votes : " << root->votes << "\n======================================================================================================\n" << root->plot << "\n" << std::endl;
+    cout << counter + 1 << ". " << root->name << " (" << root->year << ")" << " | Certification: " + root->age_rating + " | IMBD rating : " << root->rating << " | IMBD votes : " << root->votes << "\n======================================================================================================\n" << root->plot << "\n" << std::endl;
     cout << "Genres: ";
 
     for (int i = 0; i < root->genre.size(); i++) {
@@ -318,6 +421,8 @@ void RedBlackTree::printGame(Node* root) {
 
     cout << endl;
 }
+
+
 
 
 
